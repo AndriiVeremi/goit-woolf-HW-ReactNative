@@ -4,14 +4,12 @@ import {
   View,
   Text,
   ImageBackground,
-  Image,
-  Pressable,
   TouchableOpacity,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  Alert
+  Alert,
 } from "react-native";
 
 import Buttons from "../components/Buttons";
@@ -19,16 +17,11 @@ import Inputs from "../components/Inputs";
 import ImageBG from "../assets/images/PhotoBG.jpg";
 import Colors from "../styles/global";
 
-const RegistrationScreen = () => {
-  const [name, setName] = useState("");
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isButtonActive, setButtonActive] = useState(false);
-
-  const handleNameChange = (value) => {
-    setName(value);
-  };
 
   const handleEmailChange = (value) => {
     setEmail(value);
@@ -39,25 +32,23 @@ const RegistrationScreen = () => {
   };
 
   const reset = () => {
-    setName("");
     setEmail("");
     setPassword("");
   };
 
   useEffect(() => {
-    if (name && email && password) {
+    if ( email && password) {
       setButtonActive(true);
       return;
     }
     setButtonActive(false);
-  }, [name, email, password]);
+  }, [email, password]);
 
-  const signUp = () => {
-    Alert.alert("Credentials", `${name} + ${email} + ${password}`);
-    console.log("name-->", name);
+  const signIn = () => {
+    Alert.alert("Credentials", `${email} + ${password}`);
     console.log("email-->", email);
     console.log("password-->", password);
-    reset()
+    reset();
   };
 
   return (
@@ -68,23 +59,7 @@ const RegistrationScreen = () => {
         >
           <ImageBackground source={ImageBG} style={styles.imageBg}>
             <View style={styles.contentBox}>
-              <View style={styles.avatarBox}>
-                <Pressable style={styles.avatarAdd}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../assets/images/add.png")}
-                  />
-                </Pressable>
-              </View>
-              <Text style={styles.contentTitle}>Реєстрація</Text>
-
-              <Inputs
-                value={name}
-                onTextChange={handleNameChange}
-                placeholder="Логін"
-                showPassword={true}
-                keyboard="default"
-              />
+              <Text style={styles.contentTitle}>Увійти</Text>
 
               <Inputs
                 value={email}
@@ -112,12 +87,14 @@ const RegistrationScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <Buttons isButtonActive={isButtonActive} onPress={signUp}>Зареєстуватися</Buttons>
+              <Buttons isButtonActive={isButtonActive} onPress={signIn}>Увійти</Buttons>
 
               <View style={styles.textContainer}>
-                <Text style={styles.text}>Вже є акаунт?</Text>
+                <Text style={styles.text}>Немає акаунту?</Text>
                 <TouchableOpacity>
-                  <Text style={[styles.text, styles.textSolid]}>Увійти</Text>
+                  <Text style={[styles.text, styles.textSolid]}>
+                    Зареєструватися
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -128,7 +105,7 @@ const RegistrationScreen = () => {
   );
 };
 
-export default RegistrationScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -140,7 +117,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     width: "100%",
-    height: 549,
+    height: 489,
     backgroundColor: Colors.white,
     marginTop: "auto",
     borderTopLeftRadius: 25,
@@ -148,24 +125,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 16,
     paddingRight: 16,
-  },
-  avatarBox: {
-    width: 120,
-    height: 120,
-    backgroundColor: Colors.light_gray,
-    borderRadius: 16,
-    position: "relative",
-    top: -60,
-  },
-  avatarAdd: {
-    position: "relative",
-    left: 107,
-    top: 80,
-  },
-  contentTitle: {
-    fontFamily: "roboto-medium",
-    fontSize: 30,
-    marginBottom: 32,
+    paddingTop: 32,
   },
   contentTitle: {
     fontFamily: "roboto-medium",

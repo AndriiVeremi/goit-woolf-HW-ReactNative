@@ -4,6 +4,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { useEffect } from "react";
 import RegistrationScreen from "./Screens/RegistrationScreen";
+import LoginScreen from "./Screens/LoginScreen";
+import Colors from "./styles/global";
 
 export default function App() {
 
@@ -26,6 +28,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <RegistrationScreen />
+      {/* <LoginScreen /> */}
       <StatusBar style="auto" />
     </View>
   );
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     justifyContent: "center",
   },
 });
