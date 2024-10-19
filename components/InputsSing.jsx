@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
 import Colors from "../styles/global";
 
-const Inputs = ({
+const InputsSing = ({
   placeholder,
   keyboard,
   showPassword,
@@ -37,13 +37,14 @@ const Inputs = ({
       }}
       style={[styles.input, inputFocus]}
       placeholder={placeholder}
+      placeholderTextColor="#BDBDBD"
       keyboardType={keyboard}
       autoComplete={autoComplete}
     />
   );
 };
 
-export default Inputs;
+export default InputsSing;
 
 const styles = StyleSheet.create({
   input: {

@@ -5,6 +5,8 @@ import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { useEffect } from "react";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import PostsScreen from "./Screens/PostsScreen";
+import CreatePostsScreen from "./Screens/CreatePostsScreen";
 import Colors from "./styles/global";
 
 export default function App() {
@@ -27,8 +29,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <RegistrationScreen />
+      {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
+      {/* <PostsScreen/> */}
+      <CreatePostsScreen/>
       <StatusBar style="auto" />
     </View>
   );

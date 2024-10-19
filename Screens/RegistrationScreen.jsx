@@ -15,7 +15,7 @@ import {
 } from "react-native";
 
 import Buttons from "../components/Buttons";
-import Inputs from "../components/Inputs";
+import Inputs from "../components/InputsSing";
 import ImageBG from "../assets/images/PhotoBG.jpg";
 import Colors from "../styles/global";
 
