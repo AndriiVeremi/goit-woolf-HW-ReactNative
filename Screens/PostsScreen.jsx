@@ -1,36 +1,22 @@
-import Feather from '@expo/vector-icons/Feather';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import Posts from "../components/Posts";
 
-const Item = () => {
-  return (
-    <View>
-      <View style={styles.item}>
-        <Image
-          style={styles.itemImg}
-          source={require("../assets/images/item1.jpg")}
-        />
-        <Text style={styles.itemName}>Ліс</Text>
-      </View>
-
-      <View style={styles.itemInform}>
-        <View style={styles.itemArea}>
-          <Feather name="message-circle" size={24} color="#BDBDBD" />
-          <Text style={styles.itemCommentNum}>0</Text>
-        </View>
-
-        <View style={styles.itemArea}>
-          <Feather name="map-pin" size={24} color="#BDBDBD" />
-          <Text style={styles.itemAddres}>Ivano-Frankivs'k Region, Ukraine</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
+const DATA = [
+  {
+    id: "1",
+    postImg: require("../assets/images/item1.jpg"),
+    postName: "Ліс",
+    postComment: "5",
+    location: "Ivano-Frankivs'k Region, Ukraine",
+  },
+  {
+    id: "2",
+    postImg: require("../assets/images/item2.jpg"),
+    postName: "Небо",
+    postComment: "0",
+    location: "Ukraine",
+  },
+];
 
 const PostsScreen = () => {
   return (
@@ -46,9 +32,14 @@ const PostsScreen = () => {
         </View>
       </View>
 
-      {/* список фоток */}
       <View>
-        <Item />
+        <FlatList
+          data={DATA}
+          renderItem={({ item }) => (
+            <Posts postImg={item.postImg} postName={item.postName} postComment={item.postComment} location={item.location}/>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
@@ -66,7 +57,7 @@ const styles = StyleSheet.create({
   userInfo: {
     flexDirection: "row",
     marginBottom: 32,
-    alignItems: "center"
+    alignItems: "center",
   },
   userAvatar: {
     width: 60,
@@ -81,9 +72,8 @@ const styles = StyleSheet.create({
   userEmail: {
     fontFamily: "roboto-regular",
     fontSize: 11,
-    color: '#212121',
+    color: "#212121",
   },
-  item: {},
   itemImg: {
     width: "100%",
     height: 240,
@@ -93,12 +83,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontFamily: "roboto-medium",
     fontSize: 16,
-    color: '#212121',
+    color: "#212121",
     marginBottom: 8,
   },
   itemInform: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   itemArea: {
     flexDirection: "row",
@@ -106,14 +96,14 @@ const styles = StyleSheet.create({
   itemCommentNum: {
     fontFamily: "roboto-medium",
     fontSize: 16,
-    color: '#BDBDBD',
+    color: "#BDBDBD",
     marginLeft: 5,
   },
   itemAddres: {
     fontFamily: "roboto-medium",
     fontSize: 16,
-    color: '#212121',
+    color: "#212121",
     marginLeft: 5,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });

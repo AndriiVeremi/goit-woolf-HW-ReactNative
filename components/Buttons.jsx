@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import Colors from "../styles/global";
 
-const Buttons = ({ children, onPress, isButtonActive, buttonWidth }) => {
+const Buttons = ({ children, onPress, isButtonActive, buttonSize }) => {
   return (
     <TouchableOpacity
       style={[
         isButtonActive ? styles.button : styles.disabledButton,
-        buttonWidth ? styles.buttonType2 : styles.buttonType1,
+        buttonSize === "small"
+          ? styles.buttonSmall
+          : buttonSize === "medium"
+          ? styles.buttonMedium
+          : styles.buttonLarge, 
       ]}
       onPress={onPress}
     >
@@ -40,12 +44,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 16,
   },
-  buttonType1: {
-    width: "100%",
-    height: 51,
+  buttonSmall: {
+    width: 34,
+    height: 34,
   },
-  buttonType2: {
+  buttonMedium: {
     width: 70,
     height: 40,
   },
+  buttonLarge: {
+    width: "100%",
+    height: 51,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
+
+

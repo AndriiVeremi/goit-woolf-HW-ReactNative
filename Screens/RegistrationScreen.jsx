@@ -112,7 +112,7 @@ const RegistrationScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <Buttons isButtonActive={isButtonActive} onPress={signUp}>Зареєстуватися</Buttons>
+              <Buttons buttonSize="large" isButtonActive={isButtonActive} onPress={signUp}>Зареєстуватися</Buttons>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Вже є акаунт?</Text>

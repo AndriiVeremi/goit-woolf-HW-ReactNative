@@ -1,12 +1,13 @@
+import { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-import { useEffect } from "react";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import PostsScreen from "./Screens/PostsScreen";
 import CreatePostsScreen from "./Screens/CreatePostsScreen";
+import CommentsScreen from "./Screens/CommentsScreen";
 import Colors from "./styles/global";
 
 export default function App() {
@@ -31,8 +32,9 @@ export default function App() {
     <View style={styles.container}>
       {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
-      {/* <PostsScreen/> */}
-      <CreatePostsScreen/>
+      <PostsScreen/>
+      {/* <CreatePostsScreen/> */}
+      {/* <CommentsScreen/> */}
       <StatusBar style="auto" />
     </View>
   );

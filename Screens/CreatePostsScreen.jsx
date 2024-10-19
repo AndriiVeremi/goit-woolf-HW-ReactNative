@@ -72,7 +72,7 @@ const CreatePostsScreen = () => {
         </View>
 
         <Buttons
-          buttonWidth={false}
+          buttonSize="large"
           isButtonActive={isButtonActive}
           onPress={create}
         >
@@ -80,7 +80,7 @@ const CreatePostsScreen = () => {
         </Buttons>
 
         <View style={styles.treshBtn}>
-          <Buttons buttonWidth={true}>
+          <Buttons buttonSize="medium">
             <Feather name="trash-2" size={24} color="#BDBDBD" />
           </Buttons>
         </View>

@@ -87,7 +87,7 @@ const LoginScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <Buttons isButtonActive={isButtonActive} onPress={signIn}>Увійти</Buttons>
+              <Buttons buttonSize="large" isButtonActive={isButtonActive} onPress={signIn}>Увійти</Buttons>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Немає акаунту?</Text>
