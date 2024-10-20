@@ -8,6 +8,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import PostsScreen from "./Screens/PostsScreen";
 import CreatePostsScreen from "./Screens/CreatePostsScreen";
 import CommentsScreen from "./Screens/CommentsScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
 import Colors from "./styles/global";
 
 export default function App() {
@@ -30,11 +31,14 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+
       {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
-      <PostsScreen/>
+      {/* <PostsScreen/> */}
       {/* <CreatePostsScreen/> */}
       {/* <CommentsScreen/> */}
+      <ProfileScreen/>
+      
       <StatusBar style="auto" />
     </View>
   );

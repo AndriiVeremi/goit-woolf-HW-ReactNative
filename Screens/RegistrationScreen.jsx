@@ -11,12 +11,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  Alert
+  Alert,
 } from "react-native";
 
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 import ImageBG from "../assets/images/PhotoBG.jpg";
+import AddAvatar from "../assets/images/add.png";
+import Avatar from "../assets/images/Avatar.jpg";
 import Colors from "../styles/global";
 
 const RegistrationScreen = () => {
@@ -57,7 +59,7 @@ const RegistrationScreen = () => {
     console.log("name-->", name);
     console.log("email-->", email);
     console.log("password-->", password);
-    reset()
+    reset();
   };
 
   return (
@@ -68,14 +70,13 @@ const RegistrationScreen = () => {
         >
           <ImageBackground source={ImageBG} style={styles.imageBg}>
             <View style={styles.contentBox}>
-              <View style={styles.avatarBox}>
+              <View>
+                <Image style={styles.avatarBox} source={Avatar} />
                 <Pressable style={styles.avatarAdd}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../assets/images/add.png")}
-                  />
+                  <Image style={styles.tinyLogo} source={AddAvatar} />
                 </Pressable>
               </View>
+
               <Text style={styles.contentTitle}>Реєстрація</Text>
 
               <Inputs
@@ -112,7 +113,13 @@ const RegistrationScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <Buttons buttonSize="large" isButtonActive={isButtonActive} onPress={signUp}>Зареєстуватися</Buttons>
+              <Buttons
+                buttonSize="large"
+                isButtonActive={isButtonActive}
+                onPress={signUp}
+              >
+                Зареєстуватися
+              </Buttons>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Вже є акаунт?</Text>
@@ -158,9 +165,9 @@ const styles = StyleSheet.create({
     top: -60,
   },
   avatarAdd: {
-    position: "relative",
+    position: "absolute",
     left: 107,
-    top: 80,
+    top: 20,
   },
   contentTitle: {
     fontFamily: "roboto-medium",

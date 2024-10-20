@@ -1,22 +1,13 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  StatusBar,
+} from "react-native";
 import Posts from "../components/Posts";
-
-const DATA = [
-  {
-    id: "1",
-    postImg: require("../assets/images/item1.jpg"),
-    postName: "Ліс",
-    postComment: "5",
-    location: "Ivano-Frankivs'k Region, Ukraine",
-  },
-  {
-    id: "2",
-    postImg: require("../assets/images/item2.jpg"),
-    postName: "Небо",
-    postComment: "0",
-    location: "Ukraine",
-  },
-];
+import postData from "../assets/data/postData";
 
 const PostsScreen = () => {
   return (
@@ -32,11 +23,16 @@ const PostsScreen = () => {
         </View>
       </View>
 
-      <View>
+      <View style={styles.fotoList}>
         <FlatList
-          data={DATA}
+          data={postData}
           renderItem={({ item }) => (
-            <Posts postImg={item.postImg} postName={item.postName} postComment={item.postComment} location={item.location}/>
+            <Posts
+              postImg={item.postImg}
+              postName={item.postName}
+              postComment={item.postComment}
+              location={item.location}
+            />
           )}
           keyExtractor={(item) => item.id}
         />
@@ -52,7 +48,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 32,
+    // paddingTop: 32,
+    paddingTop: StatusBar.currentHeight,
   },
   userInfo: {
     flexDirection: "row",
@@ -67,12 +64,16 @@ const styles = StyleSheet.create({
   userName: {
     fontFamily: "roboto-bold",
     fontSize: 13,
-    color: 212121,
+    color: "#212121",
   },
   userEmail: {
     fontFamily: "roboto-regular",
     fontSize: 11,
     color: "#212121",
+  },
+  fotoList: {
+    width: "100%",
+    height: 620,
   },
   itemImg: {
     width: "100%",
