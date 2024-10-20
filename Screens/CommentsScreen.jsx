@@ -2,12 +2,12 @@ import { StyleSheet, View, FlatList, TextInput } from "react-native";
 import Comment from "../components/Comment";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Buttons from "../components/Buttons";
-import postComment from "../assets/data/postComment"
+import postComment from "../assets/data/postComment";
+import { Colors } from "../styles/global";
 
 const CommentsScreen = () => {
   return (
     <View style={styles.container}>
-
       <View>
         <View style={styles.containerImg}></View>
         <FlatList
@@ -27,12 +27,16 @@ const CommentsScreen = () => {
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#BDBDBD"
+          placeholderTextColor={Colors.text_gray}
           placeholder="Коментувати..."
         />
         <View style={styles.buttonWrapper}>
-          <Buttons buttonSize="small" isButtonActive={true} onPress={() => console.log("Pressed")}>
-            <AntDesign name="arrowup" size={24} color="#fff" />
+          <Buttons
+            buttonSize="small"
+            isButtonActive={true}
+            onPress={() => console.log("Pressed")}
+          >
+            <AntDesign name="arrowup" size={24} color={Colors.whites} />
           </Buttons>
         </View>
       </View>
@@ -48,33 +52,32 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 32,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   containerImg: {
     width: "100%",
     height: 240,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: Colors.light_gray,
     borderRadius: 8,
     marginBottom: 32,
   },
   inputWrapper: {
-    position: "relative", 
+    position: "relative",
     justifyContent: "center",
     marginBottom: 16,
   },
   input: {
     height: 50,
-    borderColor: "#E8E8E8",
+    borderColor: Colors.border_gray,
     borderWidth: 1,
     borderRadius: 25,
     paddingLeft: 15,
     paddingRight: 60,
-    backgroundColor: "#F6F6F6",
-    
+    backgroundColor: Colors.light_gray,
   },
   buttonWrapper: {
-    position: "absolute", 
-    right: 10, 
-    top: 8, 
+    position: "absolute",
+    right: 10,
+    top: 8,
   },
 });

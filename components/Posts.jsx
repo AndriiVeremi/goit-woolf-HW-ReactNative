@@ -1,6 +1,7 @@
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { StyleSheet, Text, View, Image } from "react-native";
+import {Colors, Fonts} from "../styles/global";
 
 const Posts = ({ postImg, postName, postComment, postLike, location }) => {
   return (
@@ -13,20 +14,20 @@ const Posts = ({ postImg, postName, postComment, postLike, location }) => {
       <View style={styles.itemInform}>
         <View style={styles.itemArea}>
           <View style={styles.itemAreaMarg}>
-            <Feather name="message-circle" size={24} color="#BDBDBD" />
+            <Feather name="message-circle" size={24} color={Colors.text_gray} />
             <Text style={styles.itemCommentNum}>{postComment}</Text>
           </View>
 
           {postLike !== undefined && postLike !== null && (
             <View style={styles.itemArea}>
-              <AntDesign name="like2" size={24} color="#BDBDBD" />
+              <AntDesign name="like2" size={24} color={Colors.text_gray} />
               <Text style={styles.itemCommentNum}>{postLike}</Text>
             </View>
           )}
         </View>
 
         <View style={styles.itemArea}>
-          <Feather name="map-pin" size={24} color="#BDBDBD" />
+          <Feather name="map-pin" size={24} color={Colors.text_gray} />
           <Text style={styles.itemAddres}>{location}</Text>
         </View>
       </View>
@@ -46,8 +47,8 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#212121",
+    fontSize: Fonts.normal,
+    color: Colors.black_primary,
     marginBottom: 8,
   },
   itemInform: {
@@ -65,14 +66,14 @@ const styles = StyleSheet.create({
   },
   itemCommentNum: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#BDBDBD",
+    fontSize: Fonts.normal,
+    color: Colors.text_gray,
     marginLeft: 5,
   },
   itemAddres: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#212121",
+    fontSize: Fonts.normal,
+    color: Colors.black_primary,
     marginLeft: 5,
     textDecorationLine: "underline",
   },

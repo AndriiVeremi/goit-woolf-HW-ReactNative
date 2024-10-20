@@ -19,7 +19,7 @@ import Inputs from "../components/InputsSing";
 import ImageBG from "../assets/images/PhotoBG.jpg";
 import AddAvatar from "../assets/images/add.png";
 import Avatar from "../assets/images/Avatar.jpg";
-import Colors from "../styles/global";
+import { Colors, Fonts } from "../styles/global";
 
 const RegistrationScreen = () => {
   const [name, setName] = useState("");
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   contentBox: {
     width: "100%",
     height: 549,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -171,12 +171,7 @@ const styles = StyleSheet.create({
   },
   contentTitle: {
     fontFamily: "roboto-medium",
-    fontSize: 30,
-    marginBottom: 32,
-  },
-  contentTitle: {
-    fontFamily: "roboto-medium",
-    fontSize: 30,
+    fontSize: Fonts.extraLarge,
     marginBottom: 32,
   },
   input: {
@@ -201,15 +196,15 @@ const styles = StyleSheet.create({
     top: 15,
   },
   passHideText: {
-    color: Colors.blue,
+    color: Colors.blues,
   },
   textContainer: {
     flexDirection: "row",
   },
   text: {
-    color: Colors.blue,
+    color: Colors.blues,
     fontFamily: "roboto-regular",
-    fontSize: 16,
+    fontSize: Fonts.normal,
   },
   textSolid: {
     textDecorationLine: "underline",

@@ -9,7 +9,7 @@ import PostsScreen from "./Screens/PostsScreen";
 import CreatePostsScreen from "./Screens/CreatePostsScreen";
 import CommentsScreen from "./Screens/CommentsScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
-import Colors from "./styles/global";
+import {Colors} from "./styles/global";
 
 export default function App() {
 
@@ -34,10 +34,10 @@ export default function App() {
 
       {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
-      <PostsScreen/>
+      {/* <PostsScreen/> */}
       {/* <CreatePostsScreen/> */}
       {/* <CommentsScreen/> */}
-      {/* <ProfileScreen/> */}
+      <ProfileScreen/>
       
       <StatusBar style="auto" />
     </View>
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whites,
     justifyContent: "center",
   },
 });

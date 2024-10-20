@@ -15,7 +15,7 @@ import {
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 import ImageBG from "../assets/images/PhotoBG.jpg";
-import Colors from "../styles/global";
+import {Colors, Fonts} from "../styles/global";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if ( email && password) {
+    if (email && password) {
       setButtonActive(true);
       return;
     }
@@ -87,7 +87,13 @@ const LoginScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <Buttons buttonSize="large" isButtonActive={isButtonActive} onPress={signIn}>Увійти</Buttons>
+              <Buttons
+                buttonSize="large"
+                isButtonActive={isButtonActive}
+                onPress={signIn}
+              >
+                Увійти
+              </Buttons>
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Немає акаунту?</Text>
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
   contentBox: {
     width: "100%",
     height: 489,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
   },
   contentTitle: {
     fontFamily: "roboto-medium",
-    fontSize: 30,
+    fontSize: Fonts.extraLarge,
     marginBottom: 32,
   },
   input: {
@@ -154,15 +160,15 @@ const styles = StyleSheet.create({
     top: 15,
   },
   passHideText: {
-    color: Colors.blue,
+    color: Colors.blues,
   },
   textContainer: {
     flexDirection: "row",
   },
   text: {
-    color: Colors.blue,
+    color: Colors.blues,
     fontFamily: "roboto-regular",
-    fontSize: 16,
+    fontSize: Fonts.normal,
   },
   textSolid: {
     textDecorationLine: "underline",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, StyleSheet } from "react-native";
-import Colors from "../styles/global";
+import {Colors} from "../styles/global";
 
 const InputsSing = ({
   placeholder,
@@ -12,14 +12,14 @@ const InputsSing = ({
 }) => {
   const normalStyle = {
     borderColor: Colors.border_gray,
-    color: "#BDBDBD",
+    color: Colors.text_gray,
     backgroundColor: Colors.light_gray,
   };
 
   const focusStyle = {
-    borderColor: Colors.orange,
-    color: "#212121",
-    backgroundColor: Colors.white,
+    borderColor: Colors.oranges,
+    color: Colors.black_primary,
+    backgroundColor: Colors.whites,
   };
 
   const [inputFocus, setInputFocus] = useState({ ...normalStyle });
@@ -37,7 +37,7 @@ const InputsSing = ({
       }}
       style={[styles.input, inputFocus]}
       placeholder={placeholder}
-      placeholderTextColor="#BDBDBD"
+      placeholderTextColor={Colors.text_gray}
       keyboardType={keyboard}
       autoComplete={autoComplete}
     />

@@ -4,7 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
-import Colors from "../styles/global";
+import {Colors, Fonts} from "../styles/global";
 
 const CreatePostsScreen = () => {
   const [namePhoto, setNamePhoto] = useState("");
@@ -42,7 +42,11 @@ const CreatePostsScreen = () => {
       <View style={styles.imgSection}>
         <View style={styles.imgContainer}>
           <TouchableOpacity style={styles.iconContainer}>
-            <MaterialIcons name="photo-camera" size={24} color="#BDBDBD" />
+            <MaterialIcons
+              name="photo-camera"
+              size={24}
+              color={Colors.text_gray}
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.fotoWork}>Завантажте фото</Text>
@@ -62,7 +66,7 @@ const CreatePostsScreen = () => {
             style={styles.inputImg}
             name="map-pin"
             size={24}
-            color="#BDBDBD"
+            color={Colors.text_gray}
           />
           <InputsCreate
             value={mapPhoto}
@@ -81,7 +85,7 @@ const CreatePostsScreen = () => {
 
         <View style={styles.treshBtn}>
           <Buttons buttonSize="medium">
-            <Feather name="trash-2" size={24} color="#BDBDBD" />
+            <Feather name="trash-2" size={24} color={Colors.text_gray} />
           </Buttons>
         </View>
       </View>
@@ -104,8 +108,8 @@ const styles = StyleSheet.create({
   imgContainer: {
     width: "100%",
     height: 240,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
+    backgroundColor: Colors.light_gray,
+    borderColor: Colors.border_gray,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
@@ -121,8 +125,8 @@ const styles = StyleSheet.create({
   },
   fotoWork: {
     fontFamily: "roboto-regular",
-    fontSize: 16,
-    color: "#BDBDBD",
+    fontSize: Fonts.normal,
+    color: Colors.text_gray,
   },
   positionContainer: {
     flexDirection: "row",

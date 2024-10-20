@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
+import {Colors, Fonts} from "../styles/global";
 
 const Comment = ({ textComment, dateComment, userAvatar, isEven }) => {
   return (
@@ -46,23 +47,23 @@ const styles = StyleSheet.create({
   containerAvatar: {
     width: 28,
     height: 28,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: Colors.light_gray,
     borderRadius: 28,
   },
   containerText: {
-    backgroundColor: "#F6F6F6",
+    backgroundColor: Colors.light_gray,
     borderRadius: 8,
     padding: 16,
     maxWidth: "70%",
   },
   text: {
     fontFamily: "roboto-regular",
-    fontSize: 13,
+    fontSize: Fonts.medium,
   },
   textData: {
     fontFamily: "roboto-regular",
-    fontSize: 10,
-    color: "#BDBDBD",
+    fontSize: Fonts.extraSmall,
+    color: Colors.text_gray,
   },
   avatarLeft: {
     marginRight: 16,

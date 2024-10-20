@@ -6,6 +6,7 @@ import {
   FlatList,
   StatusBar,
 } from "react-native";
+import { Colors, Fonts } from "../styles/global";
 import Posts from "../components/Posts";
 import postData from "../assets/data/postData";
 
@@ -32,7 +33,6 @@ const PostsScreen = () => {
               postName={item.postName}
               postComment={item.postComment}
               location={item.location}
-              postLike={item.postLike}
             />
           )}
           keyExtractor={(item) => item.id}
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontFamily: "roboto-bold",
-    fontSize: 13,
-    color: "#212121",
+    fontSize: Fonts.medium,
+    color: Colors.black_primary,
   },
   userEmail: {
     fontFamily: "roboto-regular",
-    fontSize: 11,
-    color: "#212121",
+    fontSize: Fonts.small,
+    color: Colors.black_primary,
   },
   fotoList: {
     width: "100%",
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#212121",
+    fontSize: Fonts.normal,
+    color: Colors.black_primary,
     marginBottom: 8,
   },
   itemInform: {
@@ -97,14 +97,14 @@ const styles = StyleSheet.create({
   },
   itemCommentNum: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#BDBDBD",
+    fontSize: Fonts.normal,
+    color: Colors.text_gray,
     marginLeft: 5,
   },
   itemAddres: {
     fontFamily: "roboto-medium",
-    fontSize: 16,
-    color: "#212121",
+    fontSize: Fonts.normal,
+    color: Colors.black_primary,
     marginLeft: 5,
     textDecorationLine: "underline",
   },

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { TextInput, StyleSheet } from "react-native";
+import {Colors} from "../styles/global";
 
 const InputsCreate = ({ placeholder, onTextChange, value }) => {
   return (
@@ -8,7 +9,7 @@ const InputsCreate = ({ placeholder, onTextChange, value }) => {
       value={value}
       style={styles.input}
       placeholder={placeholder}
-      placeholderTextColor="#BDBDBD"
+      placeholderTextColor={Colors.text_gray}
     />
   );
 };

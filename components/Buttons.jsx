@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import Colors from "../styles/global";
+import {Colors} from "../styles/global";
 
 const Buttons = ({ children, onPress, isButtonActive, buttonSize }) => {
   return (
@@ -18,7 +18,7 @@ const Buttons = ({ children, onPress, isButtonActive, buttonSize }) => {
       <Text
         style={[
           styles.buttonText,
-          { color: isButtonActive ? Colors.white : "#BDBDBD" },
+          { color: isButtonActive ? Colors.whites : Colors.text_gray },
         ]}
       >
         {children}
@@ -31,7 +31,7 @@ export default Buttons;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.oranges,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",

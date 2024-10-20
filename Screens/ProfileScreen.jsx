@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Posts from "../components/Posts";
-import Colors from "../styles/global";
+import { Colors, Fonts } from "../styles/global";
 
 import ImageBG from "../assets/images/PhotoBG.jpg";
 import AddAvatar from "../assets/images/add.png";
@@ -29,7 +29,7 @@ const ProfileScreen = () => {
           </View>
 
           <View style={styles.exitBtn}>
-            <Ionicons name="exit-outline" size={30} color="#BDBDBD" />
+            <Ionicons name="exit-outline" size={30} color={Colors.text_gray} />
           </View>
 
           <Text style={styles.contentTitle}>Natali Romanova</Text>
@@ -49,8 +49,6 @@ const ProfileScreen = () => {
               keyExtractor={(item) => item.id}
             />
           </View>
-
-
         </View>
       </ImageBackground>
     </View>
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
   contentBox: {
     width: "100%",
     height: 665,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
   },
   contentTitle: {
     fontFamily: "roboto-medium",
-    fontSize: 30,
+    fontSize: Fonts.extraLarge,
     top: -30,
   },
   fotoList: {
