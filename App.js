@@ -34,10 +34,10 @@ export default function App() {
 
       {/* <RegistrationScreen /> */}
       {/* <LoginScreen /> */}
-      {/* <PostsScreen/> */}
+      <PostsScreen/>
       {/* <CreatePostsScreen/> */}
       {/* <CommentsScreen/> */}
-      <ProfileScreen/>
+      {/* <ProfileScreen/> */}
       
       <StatusBar style="auto" />
     </View>

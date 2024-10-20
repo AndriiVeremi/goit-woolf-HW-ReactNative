@@ -32,6 +32,7 @@ const PostsScreen = () => {
               postName={item.postName}
               postComment={item.postComment}
               location={item.location}
+              postLike={item.postLike}
             />
           )}
           keyExtractor={(item) => item.id}
