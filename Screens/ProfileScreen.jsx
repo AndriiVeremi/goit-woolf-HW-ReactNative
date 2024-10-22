@@ -6,8 +6,8 @@ import {
   Image,
   FlatList,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Posts from "../components/Posts";
 import { Colors, Fonts } from "../styles/global";
 
@@ -15,8 +15,9 @@ import ImageBG from "../assets/images/PhotoBG.jpg";
 import AddAvatar from "../assets/images/add.png";
 import Avatar from "../assets/images/Avatar.jpg";
 import postData from "../assets/data/postData";
+import LogOutButton from "../components/LogOutButton";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={ImageBG} style={styles.imageBg}>
@@ -29,7 +30,7 @@ const ProfileScreen = () => {
           </View>
 
           <View style={styles.exitBtn}>
-            <Ionicons name="exit-outline" size={30} color={Colors.text_gray} />
+            <LogOutButton onPress={() => console.log("LogOut")} />
           </View>
 
           <Text style={styles.contentTitle}>Natali Romanova</Text>
@@ -39,6 +40,9 @@ const ProfileScreen = () => {
               data={postData}
               renderItem={({ item }) => (
                 <Posts
+                  onPress={() => {
+                    navigation.navigate("Comment");
+                  }}
                   postImg={item.postImg}
                   postName={item.postName}
                   postComment={item.postComment}

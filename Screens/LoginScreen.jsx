@@ -15,9 +15,9 @@ import {
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 import ImageBG from "../assets/images/PhotoBG.jpg";
-import {Colors, Fonts} from "../styles/global";
+import { Colors, Fonts } from "../styles/global";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -44,11 +44,16 @@ const LoginScreen = () => {
     setButtonActive(false);
   }, [email, password]);
 
+  const navi = () => {
+    navigation.navigate("Registration");
+  };
+
   const signIn = () => {
     Alert.alert("Credentials", `${email} + ${password}`);
     console.log("email-->", email);
     console.log("password-->", password);
     reset();
+    navigation.navigate("Start");
   };
 
   return (
@@ -97,7 +102,7 @@ const LoginScreen = () => {
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Немає акаунту?</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={navi}>
                   <Text style={[styles.text, styles.textSolid]}>
                     Зареєструватися
                   </Text>

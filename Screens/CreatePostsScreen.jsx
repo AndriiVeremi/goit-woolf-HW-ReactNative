@@ -101,6 +101,9 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 32,
+    backgroundColor: "#fff",
+    borderColor: "#E5E5E5",
+    borderWidth: 1,
   },
   imgSection: {
     marginBottom: 48,

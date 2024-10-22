@@ -1,16 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  StatusBar,
-} from "react-native";
+import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import { Colors, Fonts } from "../styles/global";
 import Posts from "../components/Posts";
 import postData from "../assets/data/postData";
 
-const PostsScreen = () => {
+const PostsScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
@@ -29,6 +22,9 @@ const PostsScreen = () => {
           data={postData}
           renderItem={({ item }) => (
             <Posts
+              onPress={() => {
+                navigation.navigate("Comment");
+              }}
               postImg={item.postImg}
               postName={item.postName}
               postComment={item.postComment}
@@ -49,8 +45,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 16,
     paddingRight: 16,
-    // paddingTop: 32,
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: 32,
+    backgroundColor: "#fff",
+    borderColor: "#E5E5E5",
+    borderWidth: 1,
   },
   userInfo: {
     flexDirection: "row",
@@ -74,7 +72,7 @@ const styles = StyleSheet.create({
   },
   fotoList: {
     width: "100%",
-    height: 620,
+    height: "87%",
   },
   itemImg: {
     width: "100%",

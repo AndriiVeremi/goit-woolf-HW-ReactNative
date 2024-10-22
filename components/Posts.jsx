@@ -1,9 +1,11 @@
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import {Colors, Fonts} from "../styles/global";
 
-const Posts = ({ postImg, postName, postComment, postLike, location }) => {
+const Posts = ({ postImg, postName, postComment, postLike, location, onPress }) => {
+
+
   return (
     <View>
       <View style={styles.item}>
@@ -13,16 +15,16 @@ const Posts = ({ postImg, postName, postComment, postLike, location }) => {
 
       <View style={styles.itemInform}>
         <View style={styles.itemArea}>
-          <View style={styles.itemAreaMarg}>
+          <TouchableOpacity onPress={onPress} style={styles.itemAreaMarg}>
             <Feather name="message-circle" size={24} color={Colors.text_gray} />
             <Text style={styles.itemCommentNum}>{postComment}</Text>
-          </View>
+          </TouchableOpacity>
 
           {postLike !== undefined && postLike !== null && (
-            <View style={styles.itemArea}>
+            <TouchableOpacity style={styles.itemArea}>
               <AntDesign name="like2" size={24} color={Colors.text_gray} />
               <Text style={styles.itemCommentNum}>{postLike}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         </View>
 

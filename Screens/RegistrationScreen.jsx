@@ -21,7 +21,7 @@ import AddAvatar from "../assets/images/add.png";
 import Avatar from "../assets/images/Avatar.jpg";
 import { Colors, Fonts } from "../styles/global";
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({navigation, route}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,12 +54,17 @@ const RegistrationScreen = () => {
     setButtonActive(false);
   }, [name, email, password]);
 
+  const navi = () => {
+    navigation.navigate('Login')
+  };
+
   const signUp = () => {
     Alert.alert("Credentials", `${name} + ${email} + ${password}`);
     console.log("name-->", name);
     console.log("email-->", email);
     console.log("password-->", password);
     reset();
+    navigation.navigate('Start')
   };
 
   return (
@@ -123,7 +128,7 @@ const RegistrationScreen = () => {
 
               <View style={styles.textContainer}>
                 <Text style={styles.text}>Вже є акаунт?</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={navi}>
                   <Text style={[styles.text, styles.textSolid]}>Увійти</Text>
                 </TouchableOpacity>
               </View>
