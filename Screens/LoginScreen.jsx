@@ -53,7 +53,7 @@ const LoginScreen = ({ navigation, route }) => {
     console.log("email-->", email);
     console.log("password-->", password);
     reset();
-    navigation.navigate("Start");
+    navigation.navigate("Home");
   };
 
   return (

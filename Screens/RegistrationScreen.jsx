@@ -21,7 +21,7 @@ import AddAvatar from "../assets/images/add.png";
 import Avatar from "../assets/images/Avatar.jpg";
 import { Colors, Fonts } from "../styles/global";
 
-const RegistrationScreen = ({navigation, route}) => {
+const RegistrationScreen = ({ navigation, route }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +55,7 @@ const RegistrationScreen = ({navigation, route}) => {
   }, [name, email, password]);
 
   const navi = () => {
-    navigation.navigate('Login')
+    navigation.navigate("Login");
   };
 
   const signUp = () => {
@@ -64,7 +64,7 @@ const RegistrationScreen = ({navigation, route}) => {
     console.log("email-->", email);
     console.log("password-->", password);
     reset();
-    navigation.navigate('Start')
+    navigation.navigate("Home");
   };
 
   return (

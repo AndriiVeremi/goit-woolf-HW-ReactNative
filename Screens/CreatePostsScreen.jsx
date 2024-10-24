@@ -1,39 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/Feather";
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
-import {Colors, Fonts} from "../styles/global";
+import * as Location from "expo-location";
+import { Colors, Fonts } from "../styles/global";
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({ navigation }) => {
   const [namePhoto, setNamePhoto] = useState("");
-  const [mapPhoto, setMapPhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [geocode, setGeocode] = useState(null);
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
   };
 
-  const handleMapChange = (value) => {
-    setMapPhoto(value);
-  };
+  // Camera ---------------------------------
 
-  const reset = () => {
-    setNamePhoto("");
-    setMapPhoto("");
-  };
+  // GeoLocation ---------------------------------
 
   useEffect(() => {
-    if (namePhoto && mapPhoto) {
+    if (!location) {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.log("Permission to access location was denied");
+        }
+
+        let geoLoc = await Location.getCurrentPositionAsync({});
+
+        console.log("geoLoc-->", { ...geoLoc });
+
+        setGeocode(geoLoc);
+
+        const grantedLocation = await Location.reverseGeocodeAsync(
+          geoLoc.coords
+        );
+        const country = grantedLocation[0]["country"];
+        const city = grantedLocation[0]["city"];
+        setLocation(`${country}, ${city}`);
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (namePhoto && geocode) {
       setButtonActive(true);
       return;
     }
     setButtonActive(false);
-  }, [namePhoto, mapPhoto]);
+  }, [namePhoto, geocode]);
+
+  const reset = () => {
+    setNamePhoto("");
+    setLocation("");
+    setGeocode("");
+  };
 
   const create = () => {
-    Alert.alert("Credentials", `${namePhoto} + ${mapPhoto}`);
+    Alert.alert("Credentials", `${namePhoto} + ${geocode} + ${location}`);
     reset();
   };
 
@@ -41,6 +68,8 @@ const CreatePostsScreen = () => {
     <View style={styles.container}>
       <View style={styles.imgSection}>
         <View style={styles.imgContainer}>
+          <View style={styles.photoView}></View>
+
           <TouchableOpacity style={styles.iconContainer}>
             <MaterialIcons
               name="photo-camera"
@@ -49,6 +78,7 @@ const CreatePostsScreen = () => {
             />
           </TouchableOpacity>
         </View>
+
         <Text style={styles.fotoWork}>Завантажте фото</Text>
       </View>
 
@@ -62,23 +92,31 @@ const CreatePostsScreen = () => {
         </View>
 
         <View style={[styles.positionContainer, styles.positionContainerImg]}>
-          <Feather
-            style={styles.inputImg}
-            name="map-pin"
-            size={24}
-            color={Colors.text_gray}
-          />
+          <TouchableOpacity
+          // onPressMap={() =>
+          //   navigation.navigate("Maps", { location: item.geocode })
+          // }
+          >
+            <Feather
+              style={styles.inputImg}
+              name="map-pin"
+              size={24}
+              color={Colors.text_gray}
+            />
+          </TouchableOpacity>
           <InputsCreate
-            value={mapPhoto}
-            onTextChange={handleMapChange}
+            value={location}
             placeholder="Місцевість..."
+            onChangeText={setLocation}
           />
         </View>
 
         <Buttons
+          onPress={() => {
+            navigation.navigate("Posts");
+          }}
           buttonSize="large"
           isButtonActive={isButtonActive}
-          onPress={create}
         >
           Опубліковати
         </Buttons>
@@ -137,12 +175,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.border_gray,
     marginBottom: 16,
-  },
-  positionContainerImg: {
-    marginBottom: 32,
-  },
-  inputImg: {
-    marginRight: 6,
   },
   treshBtn: {
     alignItems: "center",
