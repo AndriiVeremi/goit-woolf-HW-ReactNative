@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import PostsScreen from "../Screens/PostsScreen";
 import CreatePostsScreen from "../Screens/CreatePostsScreen";
-import CommentsScreen from "../Screens/CommentsScreen";
 import ProfileScreen from "../Screens/ProfileScreen";
 import LogOutButton from "../components/LogOutButton";
 import BackButton from "../components/BackButton";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "../styles/global";
+import { StyleSheet, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +37,11 @@ const ButtomTabNavigator = () => {
         options={({ navigation }) => ({
           headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
           title: "Створити публікацію",
-          tabBarIcon: () => <Feather name="plus" size={24} color="#21212180" />,
+          tabBarIcon: () => (
+            <View style={styles.iconContainer}>
+              <Feather name="plus" size={24} color="#fff" />
+            </View>
+          ),
           tabBarStyle: { display: "none" },
           tabBarLabel: "",
         })}
@@ -54,9 +58,19 @@ const ButtomTabNavigator = () => {
         name="Profile"
         component={ProfileScreen}
       />
-
     </Tab.Navigator>
   );
 };
 
 export default ButtomTabNavigator;
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    backgroundColor: "#FF6C00", 
+    width: 70, 
+    height: 40, 
+    borderRadius: 20, 
+    justifyContent: "center", 
+    alignItems: "center", 
+  },
+});

@@ -1,49 +1,36 @@
-import React, { useState, useEffect, useRef } from "react";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
+import { Colors, Fonts } from "../styles/global";
 import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
-import * as Location from "expo-location";
-import { Colors, Fonts } from "../styles/global";
+import PhotoCamera from "../components/PhotoCamera";
+import GalleryModal from "../components/GalleryModal";
+import LocationFetcher from "../components/PhotoLocation"; // Імпорт нового компонента
 
 const CreatePostsScreen = ({ navigation }) => {
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
   const [location, setLocation] = useState(null);
   const [geocode, setGeocode] = useState(null);
+  const [photoUri, setPhotoUri] = useState(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
   };
 
-  // Camera ---------------------------------
-
-  // GeoLocation ---------------------------------
-
-  useEffect(() => {
-    if (!location) {
-      (async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== "granted") {
-          console.log("Permission to access location was denied");
-        }
-
-        let geoLoc = await Location.getCurrentPositionAsync({});
-
-        console.log("geoLoc-->", { ...geoLoc });
-
-        setGeocode(geoLoc);
-
-        const grantedLocation = await Location.reverseGeocodeAsync(
-          geoLoc.coords
-        );
-        const country = grantedLocation[0]["country"];
-        const city = grantedLocation[0]["city"];
-        setLocation(`${country}, ${city}`);
-      })();
-    }
-  }, []);
+  const handleSelectPhoto = (uri) => {
+    setPhotoUri(uri);
+    setIsGalleryOpen(false);
+  };
 
   useEffect(() => {
     if (namePhoto && geocode) {
@@ -55,8 +42,9 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const reset = () => {
     setNamePhoto("");
-    setLocation("");
-    setGeocode("");
+    setLocation(null);
+    setGeocode(null);
+    setPhotoUri(null);
   };
 
   const create = () => {
@@ -66,21 +54,42 @@ const CreatePostsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      
+      <LocationFetcher setLocation={setLocation} setGeocode={setGeocode} />
+
       <View style={styles.imgSection}>
         <View style={styles.imgContainer}>
-          <View style={styles.photoView}></View>
-
-          <TouchableOpacity style={styles.iconContainer}>
-            <MaterialIcons
-              name="photo-camera"
-              size={24}
-              color={Colors.text_gray}
+          {photoUri && (
+            <Image
+              source={{ uri: photoUri }}
+              style={{
+                height: "100%",
+                width: "100%",
+              }}
             />
-          </TouchableOpacity>
+          )}
+
+          {!photoUri && (
+            <PhotoCamera style={styles.came} onCapture={handleSelectPhoto} />
+          )}
         </View>
 
-        <Text style={styles.fotoWork}>Завантажте фото</Text>
+        {photoUri ? (
+          <Text style={styles.fotoWork} onPress={() => setPhotoUri(null)}>
+            Видалити фото
+          </Text>
+        ) : (
+          <TouchableOpacity onPress={() => setIsGalleryOpen(true)}>
+            <Text style={styles.fotoWork}>Завантажте фото</Text>
+          </TouchableOpacity>
+        )}
       </View>
+
+      <GalleryModal
+        visible={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        onSelectPhoto={handleSelectPhoto}
+      />
 
       <View>
         <View style={styles.positionContainer}>
@@ -92,11 +101,7 @@ const CreatePostsScreen = ({ navigation }) => {
         </View>
 
         <View style={[styles.positionContainer, styles.positionContainerImg]}>
-          <TouchableOpacity
-          // onPressMap={() =>
-          //   navigation.navigate("Maps", { location: item.geocode })
-          // }
-          >
+          <TouchableOpacity>
             <Feather
               style={styles.inputImg}
               name="map-pin"
@@ -114,6 +119,7 @@ const CreatePostsScreen = ({ navigation }) => {
         <Buttons
           onPress={() => {
             navigation.navigate("Posts");
+            create();
           }}
           buttonSize="large"
           isButtonActive={isButtonActive}
@@ -121,11 +127,11 @@ const CreatePostsScreen = ({ navigation }) => {
           Опубліковати
         </Buttons>
 
-        <View style={styles.treshBtn}>
+        <TouchableOpacity onPress={reset} style={styles.treshBtn}>
           <Buttons buttonSize="medium">
             <Feather name="trash-2" size={24} color={Colors.text_gray} />
           </Buttons>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -155,6 +161,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 8,
+    overflow: "hidden",
+  },
+  came: {
+    width: "100%",
+    height: 100,
+    borderRadius: 8,
   },
   iconContainer: {
     width: 60,
@@ -175,6 +187,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: Colors.border_gray,
     marginBottom: 16,
+  },
+  positionContainerImg: {
+    marginRight: 20,
   },
   treshBtn: {
     alignItems: "center",
