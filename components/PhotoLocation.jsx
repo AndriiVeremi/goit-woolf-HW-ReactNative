@@ -13,7 +13,9 @@ const PhotoLocation = ({ setLocation, setGeocode }) => {
         let geoLoc = await Location.getCurrentPositionAsync({});
         setGeocode(geoLoc);
 
-        const grantedLocation = await Location.reverseGeocodeAsync(geoLoc.coords);
+        const grantedLocation = await Location.reverseGeocodeAsync(
+          geoLoc.coords
+        );
         const country = grantedLocation[0]["country"];
         const city = grantedLocation[0]["city"];
         setLocation(`${country}, ${city}`);
@@ -25,7 +27,7 @@ const PhotoLocation = ({ setLocation, setGeocode }) => {
     fetchLocation();
   }, []);
 
-  return null; 
+  return null;
 };
 
 export default PhotoLocation;

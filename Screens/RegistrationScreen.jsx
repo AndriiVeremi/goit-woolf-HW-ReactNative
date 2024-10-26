@@ -71,9 +71,9 @@ const RegistrationScreen = ({ navigation, route }) => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <ImageBackground source={ImageBG} style={styles.imageBg}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+          >
             <View style={styles.contentBox}>
               <View>
                 <Image style={styles.avatarBox} source={Avatar} />
@@ -133,8 +133,8 @@ const RegistrationScreen = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
             </View>
-        </KeyboardAvoidingView>
-          </ImageBackground>
+          </KeyboardAvoidingView>
+        </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   imageBg: {
     width: "100%",
     height: "100%",
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   contentBox: {
     width: "100%",
@@ -217,6 +217,3 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
 });
-
-
-

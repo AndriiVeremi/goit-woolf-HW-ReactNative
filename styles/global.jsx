@@ -17,19 +17,3 @@ export const Fonts = {
   extraLarge: 30,
 };
 
-// Colors.whites
-// Colors.black_primary
-// Colors.light_gray
-// Colors.border_gray
-// Colors.blue
-// Colors.oranges
-// Colors.text_gray
-
-// import {Colors, Fonts} from "../styles/global";
-
-//Fonts.extraSmall
-//Fonts.extraLarge
-//Fonts.medium
-//Fonts.normal
-
-// import { Colors, Fonts } from "../styles/global";
