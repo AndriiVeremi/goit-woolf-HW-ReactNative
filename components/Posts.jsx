@@ -16,7 +16,7 @@ const Posts = ({ postImg, postName, postComment, postLike, location, onPressComm
       <View style={styles.itemInform}>
         <View style={styles.itemArea}>
           <TouchableOpacity onPress={onPressComment} style={styles.itemAreaMarg}>
-            <Feather color={postComment === 0 ? "#BDBDBD" : "#FF6C00"} name="message-circle" size={24} />
+            <Feather color={postComment === 0 ? Colors.text_gray : Colors.oranges} name="message-circle" size={24} />
             <Text style={styles.itemCommentNum}>{postComment}</Text>
           </TouchableOpacity>
 

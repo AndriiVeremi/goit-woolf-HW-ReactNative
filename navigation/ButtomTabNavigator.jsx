@@ -18,6 +18,7 @@ const ButtomTabNavigator = () => {
         headerRightContainerStyle: { paddingRight: 16 },
         headerLeftContainerStyle: { paddingLeft: 16 },
         headerTitleAlign: "center",
+        tabBarStyle: { height: 70 },
       }}
     >
       <Tab.Screen

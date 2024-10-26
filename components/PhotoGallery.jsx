@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, FlatList, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
-import * as MediaLibrary from 'expo-media-library';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Platform,
+} from "react-native";
+import * as MediaLibrary from "expo-media-library";
+import { Colors } from "../styles/global";
 
 export default function PhotoGallery({ onSelectPhoto }) {
   const [photos, setPhotos] = useState([]);
@@ -9,14 +18,13 @@ export default function PhotoGallery({ onSelectPhoto }) {
   useEffect(() => {
     (async () => {
       const { status } = await MediaLibrary.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
 
-      if (status === 'granted') {
-      
+      if (status === "granted") {
         const media = await MediaLibrary.getAssetsAsync({
-          mediaType: ['photo'],
-          sortBy: ['creationTime'], 
-          first: 40, 
+          mediaType: ["photo"],
+          sortBy: ["creationTime"],
+          first: 40,
         });
         setPhotos(media.assets);
       }
@@ -28,7 +36,9 @@ export default function PhotoGallery({ onSelectPhoto }) {
   }
 
   if (photos.length === 0) {
-    return <Text style={styles.noPhotosText}>Немає фотографій у медіатеці</Text>;
+    return (
+      <Text style={styles.noPhotosText}>Немає фотографій у медіатеці</Text>
+    );
   }
 
   return (
@@ -39,10 +49,7 @@ export default function PhotoGallery({ onSelectPhoto }) {
         numColumns={2}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => onSelectPhoto(item.uri)}>
-            <Image
-              source={{ uri: item.uri }}
-              style={styles.photos}
-            />
+            <Image source={{ uri: item.uri }} style={styles.photos} />
           </TouchableOpacity>
         )}
       />
@@ -56,14 +63,14 @@ const styles = StyleSheet.create({
   },
   photos: {
     width: 180,
-    height: 140, 
+    height: 140,
     borderRadius: 8,
     margin: 4,
   },
   noPhotosText: {
     fontSize: 16,
-    color: '#666',
+    color: Colors.text_gray,
     marginTop: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

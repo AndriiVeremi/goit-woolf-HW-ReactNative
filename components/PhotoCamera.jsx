@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { Colors } from "../styles/global";
 
 function PhotoCamera({ onCapture }) {
   const [facing, setFacing] = useState("back");
@@ -56,12 +57,12 @@ function PhotoCamera({ onCapture }) {
     <CameraView ref={camera} style={styles.camera} facing={facing}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-          <MaterialIcons name="flip-camera-android" size={24} color="black" />
+          <MaterialIcons name="flip-camera-android" size={24} color={Colors.whites} />
           <Text style={styles.text}>Перевернути камеру</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={takePhoto}>
-          <MaterialIcons name="photo-camera" size={24} />
+          <MaterialIcons name="photo-camera" size={24} color={Colors.whites} />
           <Text style={styles.text}>Зробити фото</Text>
         </TouchableOpacity>
       </View>
@@ -95,6 +96,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "white",
+    color: Colors.whites,
   },
 });

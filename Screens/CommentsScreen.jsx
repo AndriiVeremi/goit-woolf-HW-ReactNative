@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 32,
     justifyContent: "space-between",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.whites,
   },
   containerImg: {
     width: "100%",

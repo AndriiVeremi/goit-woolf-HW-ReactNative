@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, View, StyleSheet } from "react-native";
 import PhotoGallery from "./PhotoGallery";
 import Buttons from "../components/Buttons";
+import { Colors } from "../styles/global";
 
 function GalleryModal({ visible, onClose, onSelectPhoto }) {
   return (
@@ -16,11 +17,7 @@ function GalleryModal({ visible, onClose, onSelectPhoto }) {
             }}
           />
         </View>
-        <Buttons
-          onPress={onClose}
-          isButtonActive={true}
-          buttonSize="large"
-        >
+        <Buttons onPress={onClose} isButtonActive={true} buttonSize="large">
           Закрити
         </Buttons>
       </View>
@@ -30,21 +27,20 @@ function GalleryModal({ visible, onClose, onSelectPhoto }) {
 
 export default GalleryModal;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff", 
-    borderTopLeftRadius: 20, 
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    overflow: "hidden", 
+    overflow: "hidden",
     alignItems: "center",
     paddingHorizontal: 16,
   },
   listContainer: {
     flex: 1,
     width: "100%",
-    paddingVertical: 16, 
+    paddingVertical: 16,
   },
   lists: {
     flex: 1,

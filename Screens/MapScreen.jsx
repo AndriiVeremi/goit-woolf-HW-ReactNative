@@ -3,14 +3,12 @@ import { View, StyleSheet } from "react-native";
 
 import * as Location from "expo-location";
 import React, { useState, useEffect } from "react";
+import { Colors } from "../styles/global";
 
 const MapScreen = ({ route }) => {
-  
   // const { location } = route.params;
   // console.log(location)
 
-
-  
   // -----Тимчасово-----------
 
   const [location, setLocation] = useState(null);
@@ -72,7 +70,7 @@ export default MapScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.whites,
     alignItems: "center",
     justifyContent: "center",
   },

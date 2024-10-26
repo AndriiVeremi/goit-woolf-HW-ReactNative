@@ -13,7 +13,7 @@ import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
 import PhotoCamera from "../components/PhotoCamera";
 import GalleryModal from "../components/GalleryModal";
-import LocationFetcher from "../components/PhotoLocation"; // Імпорт нового компонента
+import LocationFetcher from "../components/PhotoLocation";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [namePhoto, setNamePhoto] = useState("");
@@ -22,6 +22,7 @@ const CreatePostsScreen = ({ navigation }) => {
   const [geocode, setGeocode] = useState(null);
   const [photoUri, setPhotoUri] = useState(null);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [isCameraActive, setCameraActive] = useState(false);
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
@@ -33,12 +34,12 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (namePhoto && geocode) {
+    if (namePhoto && location && photoUri) {
       setButtonActive(true);
-      return;
+    } else {
+      setButtonActive(false);
     }
-    setButtonActive(false);
-  }, [namePhoto, geocode]);
+  }, [namePhoto, location, photoUri]);
 
   const reset = () => {
     setNamePhoto("");
@@ -54,7 +55,6 @@ const CreatePostsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      
       <LocationFetcher setLocation={setLocation} setGeocode={setGeocode} />
 
       <View style={styles.imgSection}>
@@ -69,8 +69,14 @@ const CreatePostsScreen = ({ navigation }) => {
             />
           )}
 
-          {!photoUri && (
+          {photoUri ? (
+            <Image source={{ uri: photoUri }} style={styles.image} />
+          ) : isCameraActive ? (
             <PhotoCamera style={styles.came} onCapture={handleSelectPhoto} />
+          ) : (
+            <TouchableOpacity onPress={() => setCameraActive(true)}>
+              <Text style={styles.activateCameraText}>Включити камеру</Text>
+            </TouchableOpacity>
           )}
         </View>
 
@@ -127,7 +133,7 @@ const CreatePostsScreen = ({ navigation }) => {
           Опубліковати
         </Buttons>
 
-        <TouchableOpacity onPress={reset} style={styles.treshBtn}>
+        <TouchableOpacity style={styles.treshBtn}>
           <Buttons buttonSize="medium">
             <Feather name="trash-2" size={24} color={Colors.text_gray} />
           </Buttons>
@@ -145,8 +151,8 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 32,
-    backgroundColor: "#fff",
-    borderColor: "#E5E5E5",
+    backgroundColor: Colors.whites,
+    borderColor: Colors.light_gray,
     borderWidth: 1,
   },
   imgSection: {
@@ -194,5 +200,11 @@ const styles = StyleSheet.create({
   treshBtn: {
     alignItems: "center",
     marginTop: 120,
+  },
+
+  activateCameraText: {
+    color: Colors.text_gray,
+    fontSize: Fonts.normal,
+    fontFamily: "roboto-regular",
   },
 });
