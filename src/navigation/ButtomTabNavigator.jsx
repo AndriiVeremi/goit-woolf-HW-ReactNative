@@ -1,16 +1,29 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostsScreen from "../Screens/PostsScreen";
-import CreatePostsScreen from "../Screens/CreatePostsScreen";
-import ProfileScreen from "../Screens/ProfileScreen";
+import PostsScreen from "../screens/PostsScreen";
+import CreatePostsScreen from "../screens/CreatePostsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import LogOutButton from "../components/LogOutButton";
 import BackButton from "../components/BackButton";
 import Feather from "@expo/vector-icons/Feather";
-import { Colors } from "../styles/global";
+import { Colors } from "../../styles/global";
 import { StyleSheet, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { logoutDB } from "../redux/reducers/authOperation";
+
 
 const Tab = createBottomTabNavigator();
 
 const ButtomTabNavigator = () => {
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutDB());
+    // navigation.navigate("Login");
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Posts"
@@ -26,7 +39,7 @@ const ButtomTabNavigator = () => {
           tabBarLabel: "",
           tabBarIcon: () => <Feather name="grid" size={24} color="#21212180" />,
           headerRight: () => (
-            <LogOutButton onPress={() => console.log("LogOut")} />
+            <LogOutButton onPress={handleLogout} />
           ),
           title: "Публікації",
         }}

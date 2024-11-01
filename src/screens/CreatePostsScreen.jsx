@@ -8,7 +8,7 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { Colors, Fonts } from "../styles/global";
+import { Colors, Fonts } from "../../styles/global";
 import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
 import PhotoCamera from "../components/PhotoCamera";

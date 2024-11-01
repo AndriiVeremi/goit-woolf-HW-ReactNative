@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
-import { Colors, Fonts } from "../styles/global";
+import { Colors, Fonts } from "../../styles/global";
 import Posts from "../components/Posts";
-import postData from "../assets/data/postData";
+import postData from "../../assets/data/postData";
 
 const PostsScreen = ({ navigation }) => {
   return (
@@ -9,7 +9,7 @@ const PostsScreen = ({ navigation }) => {
       <View style={styles.userInfo}>
         <Image
           style={styles.userAvatar}
-          source={require("../assets/images/User.png")}
+          source={require("../../assets/images/User.png")}
         />
         <View>
           <Text style={styles.userName}>Natali Romanova</Text>

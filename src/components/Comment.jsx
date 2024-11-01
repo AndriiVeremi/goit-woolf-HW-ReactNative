@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import {Colors, Fonts} from "../styles/global";
+import {Colors, Fonts} from "../../styles/global";
 
 const Comment = ({ textComment, dateComment, userAvatar, isEven }) => {
   return (

@@ -1,7 +1,7 @@
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import {Colors, Fonts} from "../styles/global";
+import {Colors, Fonts} from "../../styles/global";
 
 const Posts = ({ postImg, postName, postComment, postLike, location, onPressComment, onPressMap }) => {
 

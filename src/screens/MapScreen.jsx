@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 
 import * as Location from "expo-location";
 import React, { useState, useEffect } from "react";
-import { Colors } from "../styles/global";
+import { Colors } from "../../styles/global";
 
 const MapScreen = ({ route }) => {
   // const { location } = route.params;

@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import { Colors } from "../styles/global";
+import { Colors } from "../../styles/global";
 
 function PhotoCamera({ onCapture }) {
   const [facing, setFacing] = useState("back");

@@ -2,8 +2,8 @@ import { StyleSheet, View, FlatList, TextInput } from "react-native";
 import Comment from "../components/Comment";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Buttons from "../components/Buttons";
-import postComment from "../assets/data/postComment";
-import { Colors } from "../styles/global";
+import postComment from "../../assets/data/postComment";
+import { Colors } from "../../styles/global";
 
 const CommentsScreen = () => {
   return (

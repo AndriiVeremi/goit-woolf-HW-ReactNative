@@ -5,7 +5,6 @@ import {
   Text,
   ImageBackground,
   Image,
-  Pressable,
   TouchableOpacity,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -13,20 +12,26 @@ import {
   Platform,
   Alert,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useDispatch, useSelector } from "react-redux";
+import { registerDB } from "../redux/reducers/authOperation";
 
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
-import ImageBG from "../assets/images/PhotoBG.jpg";
-import AddAvatar from "../assets/images/add.png";
-import Avatar from "../assets/images/Avatar.jpg";
-import { Colors, Fonts } from "../styles/global";
+import ImageBG from "../../assets/images/PhotoBG.jpg";
+import AddAvatar from "../../assets/images/add.png";
+import { Colors, Fonts } from "../../styles/global";
 
 const RegistrationScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const authError = useSelector((state) => state.auth.error);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isButtonActive, setButtonActive] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const handleNameChange = (value) => {
     setName(value);
@@ -46,12 +51,36 @@ const RegistrationScreen = ({ navigation, route }) => {
     setPassword("");
   };
 
-  useEffect(() => {
-    if (name && email && password) {
-      setButtonActive(true);
+  const addAvatar = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    console.log("permissionResult -->", permissionResult);
+    if (permissionResult.granted === false) {
+      alert("Ви відмовилися від доступ до ваших фотографій!");
       return;
     }
-    setButtonActive(false);
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setProfilePhoto(result.assets[0].uri);
+    }
+  };
+
+  useEffect(() => {
+    const isNameValid = name.length >= 2;
+    const isEmailValid = email.includes("@") && email.includes(".");
+    const isPasswordValid = password.length >= 6;
+
+    if (isNameValid && isEmailValid && isPasswordValid) {
+      setButtonActive(true);
+    } else {
+      setButtonActive(false);
+    }
   }, [name, email, password]);
 
   const navi = () => {
@@ -59,13 +88,29 @@ const RegistrationScreen = ({ navigation, route }) => {
   };
 
   const signUp = () => {
-    Alert.alert("Credentials", `${name} + ${email} + ${password}`);
-    console.log("name-->", name);
-    console.log("email-->", email);
-    console.log("password-->", password);
-    reset();
-    navigation.navigate("Home");
+    if (!profilePhoto) {
+      Alert.alert("Аватар є обовязковою");
+      return;
+    }
+
+    if (email && password && name && profilePhoto) {
+      dispatch(
+        registerDB({
+          inputEmail: email,
+          inputPassword: password,
+          inputLogin: name,
+          profilePhoto,
+        })
+      );
+      reset();
+    }
   };
+
+  useEffect(() => {
+    if (authError) {
+      Alert.alert("Помилка");
+    }
+  }, [authError]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -75,11 +120,15 @@ const RegistrationScreen = ({ navigation, route }) => {
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
             <View style={styles.contentBox}>
-              <View>
-                <Image style={styles.avatarBox} source={Avatar} />
-                <Pressable style={styles.avatarAdd}>
+              <View style={styles.avatarBox}>
+                <Image
+                  style={styles.avatarImg}
+                  source={{ uri: profilePhoto }}
+                />
+
+                <TouchableOpacity onPress={addAvatar} style={styles.avatarAdd}>
                   <Image style={styles.tinyLogo} source={AddAvatar} />
-                </Pressable>
+                </TouchableOpacity>
               </View>
 
               <Text style={styles.contentTitle}>Реєстрація</Text>
@@ -170,10 +219,16 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -60,
   },
+  avatarImg: {
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    position: "relative",
+  },
   avatarAdd: {
     position: "absolute",
     left: 107,
-    top: 20,
+    top: 80,
   },
   contentTitle: {
     fontFamily: "roboto-medium",

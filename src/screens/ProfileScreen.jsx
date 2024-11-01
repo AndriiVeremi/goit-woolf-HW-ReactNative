@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Posts from "../components/Posts";
-import { Colors, Fonts } from "../styles/global";
+import { Colors, Fonts } from "../../styles/global";
 
-import ImageBG from "../assets/images/PhotoBG.jpg";
-import AddAvatar from "../assets/images/add.png";
-import Avatar from "../assets/images/Avatar.jpg";
-import postData from "../assets/data/postData";
+import ImageBG from "../../assets/images/PhotoBG.jpg";
+import AddAvatar from "../../assets/images/add.png";
+import Avatar from "../../assets/images/Avatar.jpg";
+import postData from "../../assets/data/postData";
 import LogOutButton from "../components/LogOutButton";
 
 const ProfileScreen = ({ navigation }) => {

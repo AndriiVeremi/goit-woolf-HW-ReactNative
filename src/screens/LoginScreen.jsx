@@ -14,10 +14,15 @@ import {
 
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
-import ImageBG from "../assets/images/PhotoBG.jpg";
-import { Colors, Fonts } from "../styles/global";
+import ImageBG from "../../assets/images/PhotoBG.jpg";
+import { Colors, Fonts } from "../../styles/global";
+import { loginDB } from "../redux/reducers/authOperation";
+import { useDispatch, useSelector } from "react-redux";
 
-const LoginScreen = ({ navigation, route }) => {
+const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const authError = useSelector((state) => state.auth.error);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,12 +54,25 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   const signIn = () => {
-    Alert.alert("Credentials", `${email} + ${password}`);
-    console.log("email-->", email);
-    console.log("password-->", password);
-    reset();
-    navigation.navigate("Home");
+    if (email && password) {
+      dispatch(
+        loginDB({
+          inputEmail: email,
+          inputPassword: password,
+        })
+      );
+      reset();
+    }
   };
+
+  useEffect(() => {
+    if (authError) {
+      Alert.alert(
+        "Помилка",
+        "Введений неправильний логін або пароль. Будь ласка, перевірте, чи правильно введені дані."
+      );
+    }
+  }, [authError]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -125,7 +143,7 @@ const styles = StyleSheet.create({
   imageBg: {
     width: "100%",
     height: "100%",
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   contentBox: {
     width: "100%",
