@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getPosts, createPost, addComment } from "./postOperation";
+import { getPosts, createPost  } from "./postOperation";
 
 const initialState = {
   postsArray: [],
+  isLoading: false,
 };
 
 const postsSlice = createSlice({
@@ -14,13 +15,17 @@ const postsSlice = createSlice({
         if (action.payload) {
           state.postsArray = [...action.payload];
         }
+        state.isLoading = false;
+      })
+      .addCase(getPosts.pending, (state, _) => {
+        state.isLoading = true;
+      })
+      .addCase(getPosts.rejected, (state, _) => {
+        state.isLoading = false;
       })
       .addCase(createPost.fulfilled, (state, action) => {
         state.postsArray.push(action.payload);
       })
-      .addCase(addComment.fulfilled, (state, action) => {
-        state.postsArray = action.payload;
-      });
   },
 });
 

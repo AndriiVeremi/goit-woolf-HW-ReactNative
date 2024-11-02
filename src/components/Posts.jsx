@@ -4,12 +4,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import {Colors, Fonts} from "../../styles/global";
 
 const Posts = ({ postImg, postName, postComment, postLike, location, onPressComment, onPressMap }) => {
-
+ 
+  // console.log('photo post', {uri: postImg})
 
   return (
     <View>
       <View style={styles.item}>
-        <Image style={styles.itemImg} source={postImg} />
+      <Image style={styles.itemImg} source={{uri: postImg}} />
         <Text style={styles.itemName}>{postName}</Text>
       </View>
 

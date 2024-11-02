@@ -17,11 +17,10 @@ import Inputs from "../components/InputsSing";
 import ImageBG from "../../assets/images/PhotoBG.jpg";
 import { Colors, Fonts } from "../../styles/global";
 import { loginDB } from "../redux/reducers/authOperation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const authError = useSelector((state) => state.auth.error);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,15 +63,6 @@ const LoginScreen = ({ navigation }) => {
       reset();
     }
   };
-
-  useEffect(() => {
-    if (authError) {
-      Alert.alert(
-        "Помилка",
-        "Введений неправильний логін або пароль. Будь ласка, перевірте, чи правильно введені дані."
-      );
-    }
-  }, [authError]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

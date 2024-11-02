@@ -52,3 +52,4 @@ const authSlice = createSlice({
 export const authReducer = authSlice.reducer;
 
 export const { clearUserInfo, setUserInfo } = authSlice.actions;
+

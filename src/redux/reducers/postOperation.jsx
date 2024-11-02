@@ -1,66 +1,63 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { doc, getDoc, arrayUnion, updateDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, addDoc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { auth, db, storage } from "../../../config.js";
+import { auth, db, storage } from "../../../config";
 
-export const getPosts = createAsyncThunk("posts/fetchAll", async (userId, thunkAPI) => {
-  try {
-    const docRef = doc(db, "posts", userId);
-    const docSnap = await getDoc(docRef);
-    const allPosts = docSnap.data().posts;
-    if (allPosts.length > 0) {
-      for (post of allPosts) {
-        const url = await getDownloadURL(ref(storage, post.imageUrl));
-        post.imageUrl = url;
-      }
-      return allPosts;
-    }
-    return null;
-  } catch (error) {
-    console.log(error);
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
+
 
 export const createPost = createAsyncThunk("posts/create", async ({ userId, newPost }, thunkAPI) => {
-  try {  
+  try {
     const img = await fetch(newPost.imageUrl);
     const bytes = await img.blob();
     const randomNumber = Date.now();
     const createdUrl = `posts/${randomNumber}`;
     const postImageRef = ref(storage, createdUrl);
+    
+ 
     await uploadBytes(postImageRef, bytes);
     const url = await getDownloadURL(ref(storage, createdUrl));
-    const docRef = doc(db, "posts", userId);
-    await updateDoc(docRef, {
-      posts: arrayUnion({ ...newPost, imageUrl: url }),
+
+   
+    const postRef = collection(db, "posts"); 
+    await addDoc(postRef, {
+      ...newPost,
+      imageUrl: url,
+      userId: userId, 
+      createdAt: Date.now() 
     });
-    return { ...newPost, imageUrl: url };
+
+    return { ...newPost, imageUrl: url, userId };
   } catch (error) {
     console.log(error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
-export const addComment = createAsyncThunk("posts/addComment", async ({ userId, postId, newComment }, thunkAPI) => {
+
+export const getPosts = createAsyncThunk("posts/fetchAll", async (_, thunkAPI) => {
   try {
-   const docRef = doc(db, "posts", userId);
-    const docSnap = await getDoc(docRef);
-    const allPosts = docSnap.data().posts;
-    const { photoURL, imageURL } = auth.currentUser;
+    const postsCollectionRef = collection(db, "posts");
+    const querySnapshot = await getDocs(postsCollectionRef);
+    
+    const allPosts = [];
+    querySnapshot.forEach((doc) => {
+      const postData = doc.data();
+      postData.id = doc.id;
+      allPosts.push(postData);
+    });
 
-    const updatedPosts = allPosts.map((post) => {
-      if (post.id === postId) {
-        post.comments.push({ ...newComment, photoURL: photoURL });    
+   
+    for (const post of allPosts) {
+      if (post.imageUrl) {
+        const url = await getDownloadURL(ref(storage, post.imageUrl));
+        post.imageUrl = url;
       }
-      return post;
-    });
-    await updateDoc(docRef, {
-      posts: updatedPosts,
-    });
-    return updatedPosts;
+    }
+
+    return allPosts;
   } catch (error) {
     console.log(error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+

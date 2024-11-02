@@ -9,8 +9,6 @@ const MapScreen = ({ route }) => {
   // const { location } = route.params;
   // console.log(location)
 
-  // -----Тимчасово-----------
-
   const [location, setLocation] = useState(null);
   useEffect(() => {
     if (!location) {
@@ -31,7 +29,6 @@ const MapScreen = ({ route }) => {
     }
   }, []);
 
-  //----------------------------------
 
   return (
     <View style={styles.container}>

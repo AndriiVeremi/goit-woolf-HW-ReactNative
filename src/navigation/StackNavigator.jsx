@@ -21,7 +21,7 @@ const StackNavigator = () => {
     }
   }, [user, navigation]);
 
-  console.log('user is loging ?', user)
+  // console.log('user is loging ?', user)
 
   return (
     <Stack.Navigator initialRouteName="Login">
@@ -45,13 +45,6 @@ const StackNavigator = () => {
           />
         </>
       )}
- 
-       {/* <Stack.Screen
-         options={{ presentation: "modal", headerShown: false }}
-        name="Home"
-       component={ButtomTabNavigator}
-       /> */}
-
       <Stack.Screen
         options={{
           presentation: "modal",

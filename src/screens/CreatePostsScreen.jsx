@@ -14,6 +14,10 @@ import Buttons from "../components/Buttons";
 import PhotoCamera from "../components/PhotoCamera";
 import GalleryModal from "../components/GalleryModal";
 import LocationFetcher from "../components/PhotoLocation";
+import { createPost } from "../redux/reducers/postOperation";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../redux/reducers/authSelector";
+
 
 const CreatePostsScreen = ({ navigation }) => {
   const [namePhoto, setNamePhoto] = useState("");
@@ -23,6 +27,10 @@ const CreatePostsScreen = ({ navigation }) => {
   const [photoUri, setPhotoUri] = useState(null);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isCameraActive, setCameraActive] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const userId = user.uid
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
@@ -48,8 +56,22 @@ const CreatePostsScreen = ({ navigation }) => {
     setPhotoUri(null);
   };
 
-  const create = () => {
-    Alert.alert("Credentials", `${namePhoto} + ${geocode} + ${location}`);
+  const onSubmit = () => {
+    
+    const newPost = {
+      id: Date.now(),
+      userId,
+      namePhoto,
+      location: {
+        geo: geocode,
+        name: location,
+      },
+      imageUrl: photoUri,
+      likes: 0,
+      comments: [],
+    };
+
+    dispatch(createPost({ userId, newPost }));
     reset();
   };
 
@@ -125,7 +147,7 @@ const CreatePostsScreen = ({ navigation }) => {
         <Buttons
           onPress={() => {
             navigation.navigate("Posts");
-            create();
+            onSubmit();
           }}
           buttonSize="large"
           isButtonActive={isButtonActive}

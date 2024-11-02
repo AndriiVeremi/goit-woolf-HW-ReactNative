@@ -22,9 +22,8 @@ import ImageBG from "../../assets/images/PhotoBG.jpg";
 import AddAvatar from "../../assets/images/add.png";
 import { Colors, Fonts } from "../../styles/global";
 
-const RegistrationScreen = ({ navigation, route }) => {
+const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const authError = useSelector((state) => state.auth.error);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -54,7 +53,7 @@ const RegistrationScreen = ({ navigation, route }) => {
   const addAvatar = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
-    console.log("permissionResult -->", permissionResult);
+
     if (permissionResult.granted === false) {
       alert("Ви відмовилися від доступ до ваших фотографій!");
       return;
@@ -70,6 +69,7 @@ const RegistrationScreen = ({ navigation, route }) => {
       setProfilePhoto(result.assets[0].uri);
     }
   };
+
 
   useEffect(() => {
     const isNameValid = name.length >= 2;
@@ -105,12 +105,6 @@ const RegistrationScreen = ({ navigation, route }) => {
       reset();
     }
   };
-
-  useEffect(() => {
-    if (authError) {
-      Alert.alert("Помилка");
-    }
-  }, [authError]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
