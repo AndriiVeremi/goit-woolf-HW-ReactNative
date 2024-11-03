@@ -1,56 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View, Text, ImageBackground, Image, FlatList } from "react-native";
+
 import { selectUser } from "../redux/reducers/authSelector";
-import { selectUserPost, selectAllPosts } from "../redux/reducers/postSelector";
 import { getPosts } from "../redux/reducers/postOperation";
 import { logoutDB } from "../redux/reducers/authOperation";
-
-import {
-  StyleSheet,
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  FlatList,
-} from "react-native";
+import { selectUsersPosts } from "../redux/reducers/postSelector";
 import Posts from "../components/Posts";
-
-import { Colors, Fonts } from "../../styles/global";
-
-import ImageBG from "../../assets/images/PhotoBG.jpg";
 import LogOutButton from "../components/LogOutButton";
 
+import { Colors, Fonts } from "../../styles/global";
+import ImageBG from "../../assets/images/PhotoBG.jpg";
+
 const ProfileScreen = ({ navigation }) => {
+
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const userId = user.uid;
+  const selectPostsByUserId = selectUsersPosts(userId);
+  const posts = useSelector((state) => selectPostsByUserId(state));
+
+  // console.log("\x1b[32m%s\x1b[0m", "userId ---->", userId);
+  // console.log("\x1b[34m%s\x1b[0m", "Posts Array User ---->", posts);
 
   const handleLogout = () => {
     dispatch(logoutDB());
   };
 
-  const user = useSelector(selectUser);
-  const userId = user.uid;
-  // const posts = useSelector(selectUserPost(userId));
-  const posts = useSelector(selectAllPosts);
-
-  // console.log("Posts Array ---->", posts);
-
-  // useEffect(() => {
-  //   if (!user) return;
-  //   dispatch(getPosts(userId));
-  // }, [user]);
-
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
       <ImageBackground source={ImageBG} style={styles.imageBg}>
         <View style={styles.contentBox}>
-          <View>
-            <Image style={styles.avatarBox} source={{ uri: user.photoURL }} />
-          </View>
+          <Image style={styles.avatarBox} source={{ uri: user.photoURL }} />
 
           <View style={styles.exitBtn}>
             <LogOutButton onPress={handleLogout} />
@@ -65,9 +50,7 @@ const ProfileScreen = ({ navigation }) => {
                 renderItem={({ item }) => (
                   <Posts
                     onPressComment={() => navigation.navigate("Comment")}
-                    onPressMap={() =>
-                      navigation.navigate("Maps", { location: item.location })
-                    }
+                    onPressMap={() => navigation.navigate("Maps", { posts })}
                     postImg={item.imageUrl}
                     postName={item.namePhoto}
                     postComment={item.comments.length}
@@ -103,8 +86,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     alignItems: "center",
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingHorizontal: 16,
   },
   avatarBox: {
     width: 120,
@@ -114,19 +96,10 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -60,
   },
-  avatarAdd: {
-    position: "absolute",
-    left: 107,
-    top: 20,
-  },
   exitBtn: {
     position: "absolute",
     right: 10,
     top: 20,
-  },
-  exitBtnIcon: {
-    width: 24,
-    height: 30,
   },
   contentTitle: {
     fontFamily: "roboto-medium",
@@ -138,3 +111,4 @@ const styles = StyleSheet.create({
     height: 500,
   },
 });
+

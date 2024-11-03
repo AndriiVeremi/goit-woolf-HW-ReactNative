@@ -88,6 +88,7 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   const signUp = () => {
+    
     if (!profilePhoto) {
       Alert.alert("Аватар є обовязковою");
       return;

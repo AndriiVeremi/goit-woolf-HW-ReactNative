@@ -1,19 +1,20 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors, Fonts } from "../../styles/global";
 import Posts from "../components/Posts";
-import postData from "../../assets/data/postData";
 import { selectAllPosts } from "../redux/reducers/postSelector";
 import { getPosts } from "../redux/reducers/postOperation";
 import { selectUser } from "../redux/reducers/authSelector";
 
 const PostsScreen = ({ navigation }) => {
+
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
   const user = useSelector(selectUser);
-  // console.log("post start----->", posts);
-  // console.log("user start----->", user);
+
+  // console.log("\x1b[32m%s\x1b[0m", "post start----->", posts);
+  // console.log("\x1b[34m%s\x1b[0m","user start----->", user);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -35,10 +36,8 @@ const PostsScreen = ({ navigation }) => {
             data={posts}
             renderItem={({ item }) => (
               <Posts
-                onPressComment={() => navigation.navigate("Comment")}
-                onPressMap={() =>
-                  navigation.navigate("Maps", { location: item.location })
-                }
+                onPressComment={() => navigation.navigate("Comment", { postId: item.id })}
+                onPressMap={() => navigation.navigate("Maps", { posts })}
                 postImg={item.imageUrl}
                 postName={item.namePhoto}
                 postComment={item.comments.length}

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getPosts, createPost  } from "./postOperation";
+import { getPosts, createPost, addComment } from "./postOperation";
+
 
 const initialState = {
   postsArray: [],
@@ -26,6 +27,13 @@ const postsSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         state.postsArray.push(action.payload);
       })
+      .addCase(addComment.fulfilled, (state, action) => {
+        const { postId, comment } = action.payload;
+        const post = state.posts.find((post) => post.id === postId);
+        if (post) {
+          post.comments = [...(post.comments || []), comment];
+        }
+      });
   },
 });
 

@@ -1,41 +1,82 @@
-import { StyleSheet, View, FlatList, TextInput } from "react-native";
+import { StyleSheet, View, FlatList, TextInput, Image } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import Comment from "../components/Comment";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Buttons from "../components/Buttons";
-import postComment from "../../assets/data/postComment";
 import { Colors } from "../../styles/global";
+import { selectPostById } from "../redux/reducers/postSelector";
+import { selectUser } from "../redux/reducers/authSelector";
+import { addComment } from "../redux/reducers/postOperation";
 
-const CommentsScreen = () => {
+
+const CommentsScreen = ({ route }) => {
+  const { postId } = route.params;
+  const dispatch = useDispatch();
+
+  const post = useSelector(selectPostById(postId));
+  const user = useSelector(selectUser);
+  const userId = user.uid;
+
+  // console.log("\x1b[34m%s\x1b[0m", "user Comment ---->", user);
+  // console.log("\x1b[34m%s\x1b[0m", "Posts Comment ---->", post);
+
+  const [comment, setComment] = useState("");
+
+  const handleCommentChange = (value) => {
+    setComment(value);
+  };
+
+  const reset = () => {
+    setComment("");
+  };
+
+  const addCom = () => {
+    if (comment) {
+      dispatch(
+        addComment({ postId, userId, text: comment, userAva: user.photoURL })
+      );
+      reset();
+    }
+  };
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString("uk-UA", { timeZone: "UTC" });
+  };
+
+  useEffect(() => {
+    const fetchPostData = async () => {};
+    fetchPostData();
+  }, [post.comments]);
+
   return (
     <View style={styles.container}>
-      <View>
-        <View style={styles.containerImg}></View>
-        <FlatList
-          data={postComment}
-          renderItem={({ item, index }) => (
-            <Comment
-              textComment={item.textComment}
-              dateComment={item.dateComment}
-              userAvatar={item.userAvatar}
-              isEven={index % 2 === 1}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-
+      <Image style={styles.containerImg} source={{ uri: post.imageUrl }} />
+      <FlatList
+        data={post.comments || []}
+        renderItem={({ item, index }) => (
+          <Comment
+            textComment={item.text}
+            dateComment={formatDate(item.createdAt)}
+            userAvatar={item.userAva}
+            isEven={index % 2 === 1}
+          />
+        )}
+        keyExtractor={(item) =>
+          item.createdAt ? item.createdAt.toString() : Math.random().toString()
+        }
+      />
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
           placeholderTextColor={Colors.text_gray}
           placeholder="Коментувати..."
+          onChangeText={handleCommentChange}
+          value={comment}
         />
         <View style={styles.buttonWrapper}>
-          <Buttons
-            buttonSize="small"
-            isButtonActive={true}
-            onPress={() => console.log("Pressed")}
-          >
+          <Buttons buttonSize="small" isButtonActive={true} onPress={addCom}>
             <AntDesign name="arrowup" size={24} color={Colors.whites} />
           </Buttons>
         </View>
@@ -55,13 +96,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: Colors.whites,
   },
-  containerImg: {
-    width: "100%",
-    height: 240,
-    backgroundColor: Colors.light_gray,
-    borderRadius: 8,
-    marginBottom: 32,
-  },
   inputWrapper: {
     position: "relative",
     justifyContent: "center",
@@ -80,5 +114,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     top: 8,
+  },
+  containerImg: {
+    width: "100%",
+    height: 240,
+    backgroundColor: Colors.light_gray,
+    borderRadius: 8,
+    marginBottom: 32,
   },
 });
