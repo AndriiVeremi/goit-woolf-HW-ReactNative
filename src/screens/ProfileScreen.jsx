@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { StyleSheet, View, Text, ImageBackground, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  FlatList,
+} from "react-native";
 
 import { selectUser } from "../redux/reducers/authSelector";
-import { getPosts } from "../redux/reducers/postOperation";
+import { getPosts, toggleLike } from "../redux/reducers/postOperation";
 import { logoutDB } from "../redux/reducers/authOperation";
 import { selectUsersPosts } from "../redux/reducers/postSelector";
 import Posts from "../components/Posts";
@@ -13,7 +20,6 @@ import { Colors, Fonts } from "../../styles/global";
 import ImageBG from "../../assets/images/PhotoBG.jpg";
 
 const ProfileScreen = ({ navigation }) => {
-
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const userId = user.uid;
@@ -30,6 +36,10 @@ const ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+  const handleLikeToggle = (postId) => {
+    dispatch(toggleLike({ postId, userId }));
+  };
 
   return (
     <View style={styles.container}>
@@ -49,13 +59,17 @@ const ProfileScreen = ({ navigation }) => {
                 data={posts}
                 renderItem={({ item }) => (
                   <Posts
-                    onPressComment={() => navigation.navigate("Comment")}
+                    onPressComment={() =>
+                      navigation.navigate("Comment", { postId: item.id })
+                    }
+                    onPressLike={() => handleLikeToggle(item.id)}
                     onPressMap={() => navigation.navigate("Maps", { posts })}
                     postImg={item.imageUrl}
                     postName={item.namePhoto}
                     postComment={item.comments.length}
                     location={item.location.name}
-                    postLike={item.like}
+                    postLike={item.likes}
+                    isLiked={item.likedBy && item.likedBy.includes(userId)}
                   />
                 )}
                 keyExtractor={(item) => item.id}
@@ -111,4 +125,3 @@ const styles = StyleSheet.create({
     height: 500,
   },
 });
-

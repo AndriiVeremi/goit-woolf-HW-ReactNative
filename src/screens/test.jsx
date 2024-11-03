@@ -25,17 +25,17 @@
 //     userId: "CkssiajUGnfUOL4f1TNBrx1RqSr2",
 //   },
 
-//   {
-//     comments: [],
-//     createdAt: 1730576371764,
-//     id: "lXfwIgKyV2O42FGpuXZ9",
-//     imageUrl:
-//       "https://firebasestorage.googleapis.com/v0/b/react-native-c34b8.appspot.com/o/posts%2F1730576370478?alt=media&token=0f35505c-e6a2-4e27-862c-9549ddd33f24",
-//     likes: 0,
-//     location: { geo: [Object], name: "Польща, Warszawa" },
-//     namePhoto: "Рвоочл",
-//     userId: "CkssiajUGnfUOL4f1TNBrx1RqSr2",
-//   },
+  // {
+  //   comments: [],
+  //   createdAt: 1730576371764,
+  //   id: "lXfwIgKyV2O42FGpuXZ9",
+  //   imageUrl:
+  //     "https://firebasestorage.googleapis.com/v0/b/react-native-c34b8.appspot.com/o/posts%2F1730576370478?alt=media&token=0f35505c-e6a2-4e27-862c-9549ddd33f24",
+  //   likes: 0,
+  //   location: { geo: [Object], name: "Польща, Warszawa" },
+  //   namePhoto: "Рвоочл",
+  //   userId: "CkssiajUGnfUOL4f1TNBrx1RqSr2",
+  // },
 // ];
 
 

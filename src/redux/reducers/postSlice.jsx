@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getPosts, createPost, addComment } from "./postOperation";
+import { getPosts, createPost, addComment, toggleLike } from "./postOperation";
 
 
 const initialState = {
@@ -33,7 +33,7 @@ const postsSlice = createSlice({
         if (post) {
           post.comments = [...(post.comments || []), comment];
         }
-      });
+      })
   },
 });
 

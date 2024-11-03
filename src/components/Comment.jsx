@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   containerAvatar: {
     width: 28,
     height: 28,
-    // backgroundColor: Colors.light_gray,
     borderColor: Colors.text_gray,
     borderWidth: 1,
     borderRadius: 28,

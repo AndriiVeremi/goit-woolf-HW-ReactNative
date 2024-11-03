@@ -4,21 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Colors, Fonts } from "../../styles/global";
 import Posts from "../components/Posts";
 import { selectAllPosts } from "../redux/reducers/postSelector";
-import { getPosts } from "../redux/reducers/postOperation";
+import { getPosts, toggleLike } from "../redux/reducers/postOperation";
 import { selectUser } from "../redux/reducers/authSelector";
 
 const PostsScreen = ({ navigation }) => {
-
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
   const user = useSelector(selectUser);
+  const userId = user.uid;
 
   // console.log("\x1b[32m%s\x1b[0m", "post start----->", posts);
   // console.log("\x1b[34m%s\x1b[0m","user start----->", user);
 
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [posts]);
+
+  const handleLikeToggle = (postId) => {
+    dispatch(toggleLike({ postId, userId }));
+  };
 
   return (
     <View style={styles.container}>
@@ -36,12 +40,17 @@ const PostsScreen = ({ navigation }) => {
             data={posts}
             renderItem={({ item }) => (
               <Posts
-                onPressComment={() => navigation.navigate("Comment", { postId: item.id })}
+                onPressComment={() =>
+                  navigation.navigate("Comment", { postId: item.id })
+                }
+                onPressLike={() => handleLikeToggle(item.id)}
                 onPressMap={() => navigation.navigate("Maps", { posts })}
                 postImg={item.imageUrl}
                 postName={item.namePhoto}
                 postComment={item.comments.length}
                 location={item.location.name}
+                postLike={item.likes}
+                isLiked={item.likedBy && item.likedBy.includes(userId)}
               />
             )}
             keyExtractor={(item) => item.id}
