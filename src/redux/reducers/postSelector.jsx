@@ -2,6 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const selectAllPosts = (state) => state.posts.postsArray;
 
+export const selectIsLoading = (state) => state.posts.isLoading;
+
 export const selectUsersPosts = (userId) =>
   createSelector([selectAllPosts], (posts) =>
     posts.filter((post) => post.userId === userId)

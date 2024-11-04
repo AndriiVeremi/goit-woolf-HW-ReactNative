@@ -50,7 +50,6 @@ function PhotoCamera({ onCapture }) {
     const image = await camera.current.takePictureAsync();
     await MediaLibrary.saveToLibraryAsync(image.uri); 
     onCapture(image.uri);
-    // console.log("image", image);
   };
 
   return (

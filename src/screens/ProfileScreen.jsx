@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  ActivityIndicator,
   StyleSheet,
   View,
   Text,
@@ -12,7 +13,10 @@ import {
 import { selectUser } from "../redux/reducers/authSelector";
 import { getPosts, toggleLike } from "../redux/reducers/postOperation";
 import { logoutDB } from "../redux/reducers/authOperation";
-import { selectUsersPosts } from "../redux/reducers/postSelector";
+import {
+  selectUsersPosts,
+  selectIsLoading,
+} from "../redux/reducers/postSelector";
 import Posts from "../components/Posts";
 import LogOutButton from "../components/LogOutButton";
 
@@ -21,6 +25,7 @@ import ImageBG from "../../assets/images/PhotoBG.jpg";
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectUser);
   const userId = user.uid;
   const selectPostsByUserId = selectUsersPosts(userId);
@@ -54,7 +59,14 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.contentTitle}>{user.displayName}</Text>
 
           <View style={styles.fotoList}>
-            {posts.length > 0 && (
+            {isLoading && (
+              <ActivityIndicator
+                size="150"
+                style={styles.loaders}
+                color={Colors.oranges}
+              />
+            )}
+            {!isLoading && (
               <FlatList
                 data={posts}
                 renderItem={({ item }) => (
@@ -87,6 +99,9 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loaders: {
+    marginTop: "50%",
   },
   imageBg: {
     width: "100%",

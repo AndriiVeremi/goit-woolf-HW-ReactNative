@@ -1,9 +1,19 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+} from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Colors, Fonts } from "../../styles/global";
 import Posts from "../components/Posts";
-import { selectAllPosts } from "../redux/reducers/postSelector";
+import {
+  selectAllPosts,
+  selectIsLoading,
+} from "../redux/reducers/postSelector";
 import { getPosts, toggleLike } from "../redux/reducers/postOperation";
 import { selectUser } from "../redux/reducers/authSelector";
 
@@ -11,14 +21,16 @@ const PostsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
   const user = useSelector(selectUser);
+  const isLoading = useSelector(selectIsLoading);
   const userId = user.uid;
 
   // console.log("\x1b[32m%s\x1b[0m", "post start----->", posts);
   // console.log("\x1b[34m%s\x1b[0m","user start----->", user);
+  // console.log("\x1b[34m%s\x1b[0m", "isLoading----->", isLoading);
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [posts]);
+  }, [dispatch]);
 
   const handleLikeToggle = (postId) => {
     dispatch(toggleLike({ postId, userId }));
@@ -35,7 +47,14 @@ const PostsScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.fotoList}>
-        {posts.length > 0 && (
+        {isLoading && (
+          <ActivityIndicator
+            size="150"
+            style={styles.loaders}
+            color={Colors.oranges}
+          />
+        )}
+        {!isLoading > 0 && (
           <FlatList
             data={posts}
             renderItem={({ item }) => (
@@ -73,9 +92,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.light_gray,
     borderWidth: 1,
   },
+  loaders: {
+    marginTop: "50%",
+  },
   userInfo: {
     flexDirection: "row",
-    marginBottom: 32,
+    marginBottom: 25,
     alignItems: "center",
   },
   userAvatar: {
@@ -92,7 +114,7 @@ const styles = StyleSheet.create({
   userEmail: {
     fontFamily: "roboto-regular",
     fontSize: Fonts.small,
-    color: Colors.black_primary,
+    color: Colors.oranges,
   },
   fotoList: {
     width: "100%",

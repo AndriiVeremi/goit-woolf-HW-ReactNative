@@ -18,10 +18,10 @@ import { createPost } from "../redux/reducers/postOperation";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/reducers/authSelector";
 
-
 const CreatePostsScreen = ({ navigation }) => {
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
+  const [isButtonTreshActive, setButtonTreshActive] = useState(false);
   const [location, setLocation] = useState(null);
   const [geocode, setGeocode] = useState(null);
   const [photoUri, setPhotoUri] = useState(null);
@@ -30,7 +30,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const userId = user.uid
+  const userId = user.uid;
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
@@ -47,6 +47,12 @@ const CreatePostsScreen = ({ navigation }) => {
     } else {
       setButtonActive(false);
     }
+
+    if (namePhoto || location || photoUri) {
+      setButtonTreshActive(true);
+    } else {
+      setButtonTreshActive(false);
+    }
   }, [namePhoto, location, photoUri]);
 
   const reset = () => {
@@ -57,7 +63,6 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
-    
     const newPost = {
       id: Date.now(),
       userId,
@@ -129,14 +134,13 @@ const CreatePostsScreen = ({ navigation }) => {
         </View>
 
         <View style={[styles.positionContainer, styles.positionContainerImg]}>
-          <TouchableOpacity>
-            <Feather
-              style={styles.inputImg}
-              name="map-pin"
-              size={24}
-              color={Colors.text_gray}
-            />
-          </TouchableOpacity>
+          <Feather
+            style={styles.inputImg}
+            name="map-pin"
+            size={24}
+            color={location ? Colors.oranges : Colors.text_gray}
+          />
+
           <InputsCreate
             value={location}
             placeholder="Місцевість..."
@@ -156,8 +160,16 @@ const CreatePostsScreen = ({ navigation }) => {
         </Buttons>
 
         <TouchableOpacity style={styles.treshBtn}>
-          <Buttons buttonSize="medium">
-            <Feather name="trash-2" size={24} color={Colors.text_gray} />
+          <Buttons
+            buttonSize="medium"
+            onPress={() => reset()}
+            isButtonActive={isButtonTreshActive}
+          >
+            <Feather
+              name="trash-2"
+              size={24}
+              color={!isButtonTreshActive ? Colors.text_gray : Colors.whites}
+            />
           </Buttons>
         </TouchableOpacity>
       </View>
@@ -179,6 +191,9 @@ const styles = StyleSheet.create({
   },
   imgSection: {
     marginBottom: 48,
+  },
+  inputImg: {
+    marginRight: 5,
   },
   imgContainer: {
     width: "100%",
@@ -210,6 +225,7 @@ const styles = StyleSheet.create({
     color: Colors.text_gray,
   },
   positionContainer: {
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,
@@ -223,7 +239,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 120,
   },
-
   activateCameraText: {
     color: Colors.text_gray,
     fontSize: Fonts.normal,
