@@ -13,20 +13,20 @@ import Posts from "../components/Posts";
 import {
   selectAllPosts,
   selectIsLoading,
+  selectPostError,
 } from "../redux/reducers/postSelector";
 import { getPosts, toggleLike } from "../redux/reducers/postOperation";
 import { selectUser } from "../redux/reducers/authSelector";
+import Toast from 'react-native-toast-message';
 
 const PostsScreen = ({ navigation }) => {
+
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectPostError);
   const userId = user.uid;
-
-  // console.log("\x1b[32m%s\x1b[0m", "post start----->", posts);
-  // console.log("\x1b[34m%s\x1b[0m","user start----->", user);
-  // console.log("\x1b[34m%s\x1b[0m", "isLoading----->", isLoading);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -47,6 +47,7 @@ const PostsScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.fotoList}>
+      {error && <Text>error:{`${error}`}</Text>}
         {isLoading && (
           <ActivityIndicator
             size="150"
@@ -152,4 +153,14 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     textDecorationLine: "underline",
   },
+  errors: {
+    fontSize: 30,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    overflow: "hidden",
+    // transform: translate(-50%, -50%);
+    color: "#e44848",
+  }
+
 });

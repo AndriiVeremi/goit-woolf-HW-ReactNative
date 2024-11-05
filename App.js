@@ -10,6 +10,7 @@ import { Provider, useDispatch } from "react-redux";
 import 'react-native-gesture-handler';
 import store from "./src/redux/store.jsx";
 import { authStateChanged } from "./src/utils/authListener.js";
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -52,6 +53,7 @@ const AuthListener = () => {
     <NavigationContainer>
       <StatusBar style="auto" />
       <StackNavigator />
+      <Toast />
     </NavigationContainer>
   );
 };

@@ -17,10 +17,13 @@ import Inputs from "../components/InputsSing";
 import ImageBG from "../../assets/images/PhotoBG.jpg";
 import { Colors, Fonts } from "../../styles/global";
 import { loginDB } from "../redux/reducers/authOperation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuthError } from "../redux/reducers/authSelector";
+import Toast from "react-native-toast-message";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const errorMessage = useSelector(selectAuthError);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -59,8 +62,22 @@ const LoginScreen = ({ navigation }) => {
           inputEmail: email,
           inputPassword: password,
         })
-      );
-      reset();
+      ).then((response) => {
+        if (response.type === "auth/login/fulfilled") {
+          Toast.show({
+            type: "success",
+            text1: `${email}`,
+            text2: "Ви успішно увійшли!",
+          });
+          reset();
+        } else {
+          return Toast.show({
+            type: "error",
+            text1: "Щось пішло не так.",
+            text2: `${errorMessage}`,
+          });
+        }
+      });
     }
   };
 

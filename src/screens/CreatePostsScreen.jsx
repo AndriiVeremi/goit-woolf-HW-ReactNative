@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Colors, Fonts } from "../../styles/global";
 import InputsCreate from "../components/InputsCreate";
 import Buttons from "../components/Buttons";
@@ -15,10 +8,17 @@ import PhotoCamera from "../components/PhotoCamera";
 import GalleryModal from "../components/GalleryModal";
 import LocationFetcher from "../components/PhotoLocation";
 import { createPost } from "../redux/reducers/postOperation";
-import { useDispatch, useSelector } from "react-redux";
+import { selectAuthError } from "../redux/reducers/authSelector";
 import { selectUser } from "../redux/reducers/authSelector";
+import { useDispatch, useSelector } from "react-redux";
+import Toast from "react-native-toast-message";
 
 const CreatePostsScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(selectAuthError);
+  const user = useSelector(selectUser);
+  const userId = user.uid;
+
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
   const [isButtonTreshActive, setButtonTreshActive] = useState(false);
@@ -27,10 +27,6 @@ const CreatePostsScreen = ({ navigation }) => {
   const [photoUri, setPhotoUri] = useState(null);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [isCameraActive, setCameraActive] = useState(false);
-
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const userId = user.uid;
 
   const handleNameChange = (value) => {
     setNamePhoto(value);
@@ -76,8 +72,30 @@ const CreatePostsScreen = ({ navigation }) => {
       comments: [],
     };
 
-    dispatch(createPost({ userId, newPost }));
-    reset();
+    if (newPost.namePhoto && newPost.imageUrl && newPost.userId) {
+      dispatch(createPost({ userId, newPost })).then((response) => {
+        if (response.type === "posts/create/fulfilled") {
+          Toast.show({
+            type: "success",
+            text1: "Пост успішно додано",
+          });
+          navigation.navigate("Posts");
+          reset();
+        } else {
+          return Toast.show({
+            type: "error",
+            text1: "Щось пішло не так.",
+            text2: `${errorMessage}`,
+          });
+        }
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Помилка.",
+        text2: "Всі поля повинні бути заповнені",
+      });
+    }
   };
 
   return (
@@ -150,7 +168,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
         <Buttons
           onPress={() => {
-            navigation.navigate("Posts");
+            // navigation.navigate("Posts");
             onSubmit();
           }}
           buttonSize="large"

@@ -10,20 +10,22 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { registerDB } from "../redux/reducers/authOperation";
+import { selectAuthError } from "../redux/reducers/authSelector";
 
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 import ImageBG from "../../assets/images/PhotoBG.jpg";
 import AddAvatar from "../../assets/images/add.png";
 import { Colors, Fonts } from "../../styles/global";
+import Toast from "react-native-toast-message";
 
 const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const errorMessage = useSelector(selectAuthError);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -55,8 +57,10 @@ const RegistrationScreen = ({ navigation }) => {
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Ви відмовилися від доступ до ваших фотографій!");
-      return;
+      return Toast.show({
+        type: "info",
+        text1: "Ви відмовилися від доступ до ваших фотографій!",
+      });
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -69,7 +73,6 @@ const RegistrationScreen = ({ navigation }) => {
       setProfilePhoto(result.assets[0].uri);
     }
   };
-
 
   useEffect(() => {
     const isNameValid = name.length >= 2;
@@ -88,10 +91,18 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   const signUp = () => {
-    
     if (!profilePhoto) {
-      Alert.alert("Аватар є обовязковою");
-      return;
+      return Toast.show({
+        type: "info",
+        text1: "Аватар є обовязковим",
+      });
+    }
+
+    if (!email && !password && !name) {
+      return Toast.show({
+        type: "info",
+        text1: "Всі поля повинни бути заповненні обовязково.",
+      });
     }
 
     if (email && password && name && profilePhoto) {
@@ -102,8 +113,24 @@ const RegistrationScreen = ({ navigation }) => {
           inputLogin: name,
           profilePhoto,
         })
-      );
-      reset();
+      ).then((response) => {
+        console.log("Response Type:", response.type);
+
+        if (response.type === "auth/signup/fulfilled") {
+          Toast.show({
+            type: "success",
+            text1: `${name}`,
+            text2: "Ви успішно зареєструвались!",
+          });
+          reset();
+        } else {
+          return Toast.show({
+            type: "error",
+            text1: "Щось пішло не так.",
+            text2: `${errorMessage}`,
+          });
+        }
+      });
     }
   };
 
