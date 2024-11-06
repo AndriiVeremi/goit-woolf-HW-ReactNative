@@ -15,7 +15,6 @@ const Posts = ({
   onPressLike,
   isLiked,
 }) => {
-  
   return (
     <View>
       <View style={styles.item}>

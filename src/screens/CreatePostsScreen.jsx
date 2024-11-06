@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import { Colors, Fonts } from "../../styles/global";
-import InputsCreate from "../components/InputsCreate";
-import Buttons from "../components/Buttons";
-import PhotoCamera from "../components/PhotoCamera";
-import GalleryModal from "../components/GalleryModal";
-import LocationFetcher from "../components/PhotoLocation";
 import { createPost } from "../redux/reducers/postOperation";
 import { selectAuthError } from "../redux/reducers/authSelector";
 import { selectUser } from "../redux/reducers/authSelector";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
+import InputsCreate from "../components/InputsCreate";
+import Buttons from "../components/Buttons";
+import PhotoCamera from "../components/PhotoCamera";
+import GalleryModal from "../components/GalleryModal";
+import LocationFetcher from "../components/PhotoLocation";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { Colors, Fonts } from "../../styles/global";
 
 const CreatePostsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(selectAuthError);
   const user = useSelector(selectUser);
   const userId = user.uid;
+
 
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
@@ -69,6 +70,7 @@ const CreatePostsScreen = ({ navigation }) => {
       },
       imageUrl: photoUri,
       likes: 0,
+      likedBy: [],
       comments: [],
     };
 

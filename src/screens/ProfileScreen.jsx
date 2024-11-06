@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ActivityIndicator,
@@ -8,20 +8,23 @@ import {
   ImageBackground,
   Image,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
-
+import * as ImagePicker from "expo-image-picker";
 import { selectUser } from "../redux/reducers/authSelector";
 import { getPosts, toggleLike } from "../redux/reducers/postOperation";
-import { logoutDB } from "../redux/reducers/authOperation";
+import { logoutDB, updateAvatarDB } from "../redux/reducers/authOperation";
 import {
   selectUsersPosts,
   selectIsLoading,
 } from "../redux/reducers/postSelector";
+
 import Posts from "../components/Posts";
 import LogOutButton from "../components/LogOutButton";
 
 import { Colors, Fonts } from "../../styles/global";
 import ImageBG from "../../assets/images/PhotoBG.jpg";
+import AddAvatarImg from "../../assets/images/add.png";
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -31,8 +34,34 @@ const ProfileScreen = ({ navigation }) => {
   const selectPostsByUserId = selectUsersPosts(userId);
   const posts = useSelector((state) => selectPostsByUserId(state));
 
-  // console.log("\x1b[32m%s\x1b[0m", "userId ---->", userId);
-  // console.log("\x1b[34m%s\x1b[0m", "Posts Array User ---->", posts);
+  const [newAvatarUri, setNewAvatarUri] = useState("");
+
+
+  console.log("\x1b[32m%s\x1b[0m", "user ---->", user.photoURL);
+
+  const changeAvatar = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      return Toast.show({
+        type: "info",
+        text1: "Access to photos is required to update your avatar.",
+      });
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setNewAvatarUri(result.assets[0].uri);
+      dispatch(updateAvatarDB(result.assets[0].uri));
+    }
+  };
 
   const handleLogout = () => {
     dispatch(logoutDB());
@@ -40,7 +69,7 @@ const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [user.photoURL]);
 
   const handleLikeToggle = (postId) => {
     dispatch(toggleLike({ postId, userId }));
@@ -50,7 +79,16 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground source={ImageBG} style={styles.imageBg}>
         <View style={styles.contentBox}>
-          <Image style={styles.avatarBox} source={{ uri: user.photoURL }} />
+          <View style={styles.avatarBox}>
+            <Image style={styles.avatarImg} source={{uri: newAvatarUri ? newAvatarUri : user.photoURL}} />
+
+            <TouchableOpacity
+              onPress={() => changeAvatar()}
+              style={styles.avatarAdd}
+            >
+              <Image style={styles.tinyLogo} source={AddAvatarImg} />
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.exitBtn}>
             <LogOutButton onPress={handleLogout} />
@@ -125,6 +163,17 @@ const styles = StyleSheet.create({
     position: "relative",
     top: -60,
   },
+  avatarImg: {
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    position: "relative",
+  },
+  avatarAdd: {
+    position: "absolute",
+    left: 107,
+    top: 80,
+  },
   exitBtn: {
     position: "absolute",
     right: 10,
@@ -138,5 +187,10 @@ const styles = StyleSheet.create({
   fotoList: {
     width: "100%",
     height: 500,
+  },
+  avatarAdd: {
+    position: "absolute",
+    left: 107,
+    top: 80,
   },
 });

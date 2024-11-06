@@ -15,11 +15,12 @@ import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { registerDB } from "../redux/reducers/authOperation";
 import { selectAuthError } from "../redux/reducers/authSelector";
-
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
+
+
 import ImageBG from "../../assets/images/PhotoBG.jpg";
-import AddAvatar from "../../assets/images/add.png";
+import AddAvatarImg from "../../assets/images/add.png";
 import { Colors, Fonts } from "../../styles/global";
 import Toast from "react-native-toast-message";
 
@@ -149,7 +150,7 @@ const RegistrationScreen = ({ navigation }) => {
                 />
 
                 <TouchableOpacity onPress={addAvatar} style={styles.avatarAdd}>
-                  <Image style={styles.tinyLogo} source={AddAvatar} />
+                  <Image style={styles.tinyLogo} source={AddAvatarImg} />
                 </TouchableOpacity>
               </View>
 

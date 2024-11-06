@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { Colors } from "../../styles/global";
 
 function PhotoCamera({ onCapture }) {

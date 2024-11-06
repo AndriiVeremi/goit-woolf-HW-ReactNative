@@ -80,5 +80,37 @@ export const logoutDB = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
+export const updateAvatarDB = createAsyncThunk(
+  "auth/updateAvatar",
+  async (newProfilePhoto, thunkAPI) => {
+    try {
+      const profileImg = await fetch(newProfilePhoto);
+      const bytes = await profileImg.blob();
+      const avatarUrl = `profiles/${Date.now()}`;
+      const avatarRef = ref(storage, avatarUrl);
+      await uploadBytes(avatarRef, bytes);
+      const newAvatarUrl = await getDownloadURL(avatarRef);
+
+ 
+      await updateProfile(auth.currentUser, {
+        photoURL: newAvatarUrl,
+      });
+
+      const { uid } = auth.currentUser;
+
+      await setDoc(
+        doc(db, "users", uid),
+        { photoURL: newAvatarUrl },
+        { merge: true }
+      );
+
+      return { photoURL: newAvatarUrl };
+    } catch (error) {
+      console.error("AVATAR UPDATE ERROR:", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 
 

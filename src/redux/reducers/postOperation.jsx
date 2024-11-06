@@ -107,6 +107,7 @@ export const toggleLike = createAsyncThunk(
       }
 
       const postData = postSnapshot.data();
+      // Перевіряємо та ініціалізуємо likedBy як порожній масив, якщо його немає
       const likedBy = postData.likedBy || [];
 
       if (likedBy.includes(userId)) {

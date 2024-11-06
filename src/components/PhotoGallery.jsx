@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Platform,
 } from "react-native";
 import * as MediaLibrary from "expo-media-library";
 import { Colors } from "../../styles/global";
