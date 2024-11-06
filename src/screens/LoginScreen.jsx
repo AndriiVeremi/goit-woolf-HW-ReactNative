@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     width: "100%",
-    height: 489,
+    height: "75%",
     backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,

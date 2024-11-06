@@ -95,6 +95,7 @@ export const addComment = createAsyncThunk(
   }
 );
 
+
 export const toggleLike = createAsyncThunk(
   "posts/toggleLike",
   async ({ postId, userId }, thunkAPI) => {
@@ -107,8 +108,7 @@ export const toggleLike = createAsyncThunk(
       }
 
       const postData = postSnapshot.data();
-      // Перевіряємо та ініціалізуємо likedBy як порожній масив, якщо його немає
-      const likedBy = postData.likedBy || [];
+      const likedBy = Array.isArray(postData.likedBy) ? postData.likedBy : []; 
 
       if (likedBy.includes(userId)) {
         await updateDoc(postRef, {
@@ -129,8 +129,6 @@ export const toggleLike = createAsyncThunk(
     }
   }
 );
-
-
 
 
 

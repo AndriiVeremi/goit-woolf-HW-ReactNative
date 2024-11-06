@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     width: "100%",
-    height: 549,
+    height: "80%",
     backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,
