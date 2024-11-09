@@ -27,16 +27,16 @@ export const registerDB = createAsyncThunk(
         photoURL: profileImageUrl,
       });
 
-      const { email, displayName, photoURL, uid } = auth.currentUser;
+      const { email, displayName, photoURL, uid: userId } = auth.currentUser;
 
-      await setDoc(doc(db, "users", uid), {
+      await setDoc(doc(db, "users", userId), {
         email: email,
         displayName: displayName,
-        userId: uid,
+        userId: userId,
         photoURL: photoURL,
       });
 
-      return { email, displayName, userId: uid, photoURL };
+      return { email, displayName, userId, photoURL };
     } catch (error) {
       console.error("SIGNUP ERROR:", error.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -49,9 +49,10 @@ export const loginDB = createAsyncThunk(
   async ({ inputEmail, inputPassword }, thunkAPI) => {
     try {
       await signInWithEmailAndPassword(auth, inputEmail, inputPassword);
-      const { uid } = auth.currentUser;
 
-      const userDoc = await getDoc(doc(db, "users", uid));
+      const { uid: userId } = auth.currentUser;
+
+      const userDoc = await getDoc(doc(db, "users", userId));
       if (userDoc.exists()) {
         const userData = userDoc.data();
         return {
@@ -91,15 +92,14 @@ export const updateAvatarDB = createAsyncThunk(
       await uploadBytes(avatarRef, bytes);
       const newAvatarUrl = await getDownloadURL(avatarRef);
 
- 
       await updateProfile(auth.currentUser, {
         photoURL: newAvatarUrl,
       });
 
-      const { uid } = auth.currentUser;
+      const userId = auth.currentUser.uid;
 
       await setDoc(
-        doc(db, "users", uid),
+        doc(db, "users", userId),
         { photoURL: newAvatarUrl },
         { merge: true }
       );
@@ -111,6 +111,3 @@ export const updateAvatarDB = createAsyncThunk(
     }
   }
 );
-
-
-

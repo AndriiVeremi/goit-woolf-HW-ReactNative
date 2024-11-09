@@ -17,7 +17,8 @@ const CommentsScreen = ({ route }) => {
 
   const post = useSelector(selectPostById(postId));
   const user = useSelector(selectUser);
-  const userId = user.uid;
+  
+  const userId = user.userId ? user.userId : user.uid;
 
   const [comment, setComment] = useState("");
 

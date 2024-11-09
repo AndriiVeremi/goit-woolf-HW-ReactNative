@@ -17,7 +17,9 @@ const CreatePostsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(selectAuthError);
   const user = useSelector(selectUser);
-  const userId = user.userId;
+  const userId = user.userId ? user.userId : user.uid;
+
+  console.log("message", user)
 
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
@@ -73,11 +75,6 @@ const CreatePostsScreen = ({ navigation }) => {
       likedBy: [],
       comments: [],
     };
-
-
-    console.log("namePhoto", newPost.namePhoto)
-    console.log("imageUrl", newPost.imageUrl)
-    console.log("userId", newPost.userId)
 
     if (newPost.namePhoto && newPost.imageUrl && newPost.userId) {
       dispatch(createPost({ userId, newPost })).then((response) => {
