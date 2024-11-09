@@ -17,8 +17,7 @@ const CreatePostsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(selectAuthError);
   const user = useSelector(selectUser);
-  const userId = user.uid;
-
+  const userId = user.userId;
 
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
@@ -60,7 +59,7 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
-    
+
     const newPost = {
       id: Date.now(),
       userId,

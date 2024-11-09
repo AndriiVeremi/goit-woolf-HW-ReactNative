@@ -21,8 +21,6 @@ const StackNavigator = () => {
     }
   }, [user, navigation]);
 
-  // console.log('user is loging ?', user)
-
   return (
     <Stack.Navigator initialRouteName="Login">
       {user ? (
