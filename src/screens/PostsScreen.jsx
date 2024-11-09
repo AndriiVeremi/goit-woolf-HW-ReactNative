@@ -24,11 +24,6 @@ const PostsScreen = ({ navigation }) => {
   const isLoading = useSelector(selectIsLoading);
   const userId = user.uid;
 
-
-  
-  console.log("\x1b[34m%s\x1b[0m", " User postscrren ---->", user.photoURL);
-  console.log("\x1b[34m%s\x1b[0m", " Posts postscrren ---->", posts);
-
   useEffect(() => {
     dispatch(getPosts());
   }, []);

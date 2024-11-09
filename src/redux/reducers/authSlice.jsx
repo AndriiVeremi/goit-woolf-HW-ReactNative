@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerDB, loginDB, logoutDB, updateAvatarDB } from "../reducers/authOperation";
+import {
+  registerDB,
+  loginDB,
+  logoutDB,
+  updateAvatarDB,
+} from "../reducers/authOperation";
 
 const initialState = {
-  user: { login: null, email: null, userId: "", photo: "" },
+  user: { login: null, email: null, userId: "", photoURL: "" },
   error: null,
   isLogged: false,
 };
@@ -12,7 +17,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearUserInfo(state) {
-      state.user = { login: null, email: null, userId: "", photo: "" };
+      state.user = { login: null, email: null, userId: "", photoURL: null };
       state.isLogged = false;
     },
 
@@ -42,12 +47,12 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logoutDB.fulfilled, (state) => {
-        state.user = { login: null, email: null, userId: "", photo: "" };
+        state.user = { login: null, email: null, userId: "", photoURL: "" };
         state.isLogged = false;
         state.error = null;
       })
       .addCase(updateAvatarDB.fulfilled, (state, action) => {
-        state.user.photo = action.payload.photoURL;
+        state.user.photoURL = action.payload.photoURL;
         state.error = null;
       })
       .addCase(updateAvatarDB.rejected, (state, action) => {
@@ -59,4 +64,3 @@ const authSlice = createSlice({
 export const authReducer = authSlice.reducer;
 
 export const { clearUserInfo, setUserInfo } = authSlice.actions;
-

@@ -60,6 +60,7 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
+    
     const newPost = {
       id: Date.now(),
       userId,
@@ -73,6 +74,11 @@ const CreatePostsScreen = ({ navigation }) => {
       likedBy: [],
       comments: [],
     };
+
+
+    console.log("namePhoto", newPost.namePhoto)
+    console.log("imageUrl", newPost.imageUrl)
+    console.log("userId", newPost.userId)
 
     if (newPost.namePhoto && newPost.imageUrl && newPost.userId) {
       dispatch(createPost({ userId, newPost })).then((response) => {
@@ -170,7 +176,6 @@ const CreatePostsScreen = ({ navigation }) => {
 
         <Buttons
           onPress={() => {
-            // navigation.navigate("Posts");
             onSubmit();
           }}
           buttonSize="large"

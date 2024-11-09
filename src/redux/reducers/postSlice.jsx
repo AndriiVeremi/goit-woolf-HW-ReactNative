@@ -28,29 +28,33 @@ const postsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getPosts.rejected, handleRejected)
-      
+
       .addCase(createPost.pending, handlePending)
       .addCase(createPost.fulfilled, (state, action) => {
         state.postsArray.push({ ...action.payload, likes: [] });
         state.isLoading = false;
       })
       .addCase(createPost.rejected, handleRejected)
-      
+
       .addCase(addComment.pending, handlePending)
       .addCase(addComment.fulfilled, (state, action) => {
-        const post = state.postsArray.find((post) => post.id === action.payload.postId);
+        const post = state.postsArray.find(
+          (post) => post.id === action.payload.postId
+        );
         if (post) {
           post.comments = [...(post.comments ?? []), action.payload.comment];
         }
         state.isLoading = false;
       })
       .addCase(addComment.rejected, handleRejected)
-      
+
       .addCase(toggleLike.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(toggleLike.fulfilled, (state, action) => {
-        const post = state.postsArray.find((post) => post.id === action.payload.postId);
+        const post = state.postsArray.find(
+          (post) => post.id === action.payload.postId
+        );
         if (post) {
           post.likedBy = post.likedBy ?? [];
           const userIndex = post.likedBy.indexOf(action.payload.userId);

@@ -36,9 +36,6 @@ const ProfileScreen = ({ navigation }) => {
 
   const [newAvatarUri, setNewAvatarUri] = useState("");
 
-
-  console.log("\x1b[32m%s\x1b[0m", "user ---->", user.photoURL);
-
   const changeAvatar = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
