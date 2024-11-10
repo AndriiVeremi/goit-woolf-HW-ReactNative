@@ -19,6 +19,7 @@ import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 
 import ImageBG from "../../assets/images/PhotoBG.jpg";
+import noAvatar from "../../assets/images/no-avatar.jpg";
 import AddAvatarImg from "../../assets/images/add.png";
 import { Colors, Fonts } from "../../styles/global";
 import Toast from "react-native-toast-message";
@@ -143,10 +144,20 @@ const RegistrationScreen = ({ navigation }) => {
           >
             <View style={styles.contentBox}>
               <View style={styles.avatarBox}>
-                <Image
+
+                {/* <Image
                   style={styles.avatarImg}
                   source={{ uri: profilePhoto }}
-                />
+                /> */}
+
+                {profilePhoto ? (
+                  <Image
+                    style={styles.avatarImg}
+                    source={{ uri: profilePhoto }}
+                  />
+                ) : (
+                  <Image style={styles.avatarImg} source={noAvatar} /> 
+                )}
 
                 <TouchableOpacity onPress={addAvatar} style={styles.avatarAdd}>
                   <Image style={styles.tinyLogo} source={AddAvatarImg} />
