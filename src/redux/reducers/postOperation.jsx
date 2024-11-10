@@ -16,6 +16,7 @@ export const createPost = createAsyncThunk(
   "posts/create",
   async ({ userId, newPost }, thunkAPI) => {
     try {
+      const userIdString = String(userId); 
       const img = await fetch(newPost.imageUrl);
       const bytes = await img.blob();
       const randomNumber = Date.now();
@@ -29,17 +30,18 @@ export const createPost = createAsyncThunk(
       await addDoc(postRef, {
         ...newPost,
         imageUrl: url,
-        userId: userId,
+        userId: userIdString, 
         createdAt: Date.now(),
       });
 
-      return { ...newPost, imageUrl: url, userId };
+      return { ...newPost, imageUrl: url, userId: userIdString };  
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+
 
 export const getPosts = createAsyncThunk(
   "posts/fetchAll",
@@ -77,7 +79,7 @@ export const addComment = createAsyncThunk(
       const postRef = doc(db, "posts", postId);
 
       const comment = {
-        userId,
+        userId: String(userId),
         text,
         createdAt: Date.now(),
         userAva,
@@ -95,15 +97,11 @@ export const addComment = createAsyncThunk(
   }
 );
 
-
 export const toggleLike = createAsyncThunk(
   "posts/toggleLike",
   async ({ postId, userId }, thunkAPI) => {
     try {
-      if (!userId) {
-        throw new Error("Invalid userId");
-      }
-      
+   
       const postRef = doc(db, "posts", postId);
       const postSnapshot = await getDoc(postRef);
 
@@ -116,24 +114,20 @@ export const toggleLike = createAsyncThunk(
 
       if (likedBy.includes(userId)) {
         await updateDoc(postRef, {
-          likedBy: arrayRemove(userId),
+          likedBy: arrayRemove(String(userId)), 
           likes: (postData.likes || 0) - 1,
         });
       } else {
         await updateDoc(postRef, {
-          likedBy: arrayUnion(userId),
+          likedBy: arrayUnion(String(userId)),
           likes: (postData.likes || 0) + 1,
         });
       }
 
-      return { postId, userId };
+      return { postId, userId: String(userId) }; 
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-
-
-

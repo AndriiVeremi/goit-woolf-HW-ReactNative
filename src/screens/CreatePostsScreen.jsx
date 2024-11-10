@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import { createPost } from "../redux/reducers/postOperation";
+import { createPost, getPosts } from "../redux/reducers/postOperation";
 import { selectAuthError } from "../redux/reducers/authSelector";
 import { selectUser } from "../redux/reducers/authSelector";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,6 +80,7 @@ const CreatePostsScreen = ({ navigation }) => {
             type: "success",
             text1: "Пост успішно додано",
           });
+          dispatch(getPosts());
           navigation.navigate("Posts");
           reset();
         } else {
