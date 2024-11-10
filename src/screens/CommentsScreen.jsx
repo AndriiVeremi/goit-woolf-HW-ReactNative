@@ -1,4 +1,3 @@
-
 import { StyleSheet, View, FlatList, TextInput, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
@@ -10,14 +9,13 @@ import { selectPostById } from "../redux/reducers/postSelector";
 import { selectUser } from "../redux/reducers/authSelector";
 import { addComment } from "../redux/reducers/postOperation";
 
-
 const CommentsScreen = ({ route }) => {
   const { postId } = route.params;
   const dispatch = useDispatch();
 
   const post = useSelector(selectPostById(postId));
   const user = useSelector(selectUser);
-  
+
   const userId = user.userId ? user.userId : user.uid;
 
   const [comment, setComment] = useState("");

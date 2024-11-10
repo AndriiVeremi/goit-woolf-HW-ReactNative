@@ -17,7 +17,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearUserInfo(state) {
-      state.user = { login: null, email: null, userId: "", photoURL: null };
+      state.user = { login: null, email: null, userId: "" };
       state.isLogged = false;
     },
 
@@ -47,7 +47,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logoutDB.fulfilled, (state) => {
-        state.user = { login: null, email: null, userId: "", photoURL: "" };
+        state.user = { login: null, email: null, userId: "" };
         state.isLogged = false;
         state.error = null;
       })

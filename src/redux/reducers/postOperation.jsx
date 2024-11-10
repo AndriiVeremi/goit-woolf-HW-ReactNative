@@ -100,6 +100,10 @@ export const toggleLike = createAsyncThunk(
   "posts/toggleLike",
   async ({ postId, userId }, thunkAPI) => {
     try {
+      if (!userId) {
+        throw new Error("Invalid userId");
+      }
+      
       const postRef = doc(db, "posts", postId);
       const postSnapshot = await getDoc(postRef);
 
@@ -108,7 +112,7 @@ export const toggleLike = createAsyncThunk(
       }
 
       const postData = postSnapshot.data();
-      const likedBy = Array.isArray(postData.likedBy) ? postData.likedBy : []; 
+      const likedBy = Array.isArray(postData.likedBy) ? postData.likedBy : [];
 
       if (likedBy.includes(userId)) {
         await updateDoc(postRef, {

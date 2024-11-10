@@ -18,7 +18,6 @@ import { selectAuthError } from "../redux/reducers/authSelector";
 import Buttons from "../components/Buttons";
 import Inputs from "../components/InputsSing";
 
-
 import ImageBG from "../../assets/images/PhotoBG.jpg";
 import AddAvatarImg from "../../assets/images/add.png";
 import { Colors, Fonts } from "../../styles/global";

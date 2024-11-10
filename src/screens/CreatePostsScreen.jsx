@@ -19,8 +19,6 @@ const CreatePostsScreen = ({ navigation }) => {
   const user = useSelector(selectUser);
   const userId = user.userId ? user.userId : user.uid;
 
-  console.log("message", user)
-
   const [namePhoto, setNamePhoto] = useState("");
   const [isButtonActive, setButtonActive] = useState(false);
   const [isButtonTreshActive, setButtonTreshActive] = useState(false);
@@ -61,7 +59,6 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const onSubmit = () => {
-
     const newPost = {
       id: Date.now(),
       userId,

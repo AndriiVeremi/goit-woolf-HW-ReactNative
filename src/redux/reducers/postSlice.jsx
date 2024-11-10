@@ -31,7 +31,7 @@ const postsSlice = createSlice({
 
       .addCase(createPost.pending, handlePending)
       .addCase(createPost.fulfilled, (state, action) => {
-        state.postsArray.push({ ...action.payload, likes: [] });
+        state.postsArray.push({ ...action.payload });
         state.isLoading = false;
       })
       .addCase(createPost.rejected, handleRejected)

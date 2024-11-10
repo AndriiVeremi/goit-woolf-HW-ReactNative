@@ -17,6 +17,7 @@ import { logoutDB, updateAvatarDB } from "../redux/reducers/authOperation";
 import {
   selectUsersPosts,
   selectIsLoading,
+  selectAllPosts,
 } from "../redux/reducers/postSelector";
 
 import Posts from "../components/Posts";
@@ -30,7 +31,7 @@ const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectUser);
-  const userId = user.uid;
+  const userId = user.userId ? user.userId : user.uid;
   const selectPostsByUserId = selectUsersPosts(userId);
   const posts = useSelector((state) => selectPostsByUserId(state));
 
@@ -77,7 +78,10 @@ const ProfileScreen = ({ navigation }) => {
       <ImageBackground source={ImageBG} style={styles.imageBg}>
         <View style={styles.contentBox}>
           <View style={styles.avatarBox}>
-            <Image style={styles.avatarImg} source={{uri: newAvatarUri ? newAvatarUri : user.photoURL}} />
+            <Image
+              style={styles.avatarImg}
+              source={{ uri: newAvatarUri ? newAvatarUri : user.photoURL }}
+            />
 
             <TouchableOpacity
               onPress={() => changeAvatar()}
@@ -144,7 +148,7 @@ const styles = StyleSheet.create({
   },
   contentBox: {
     width: "100%",
-    height: '80%',
+    height: "80%",
     backgroundColor: Colors.whites,
     marginTop: "auto",
     borderTopLeftRadius: 25,

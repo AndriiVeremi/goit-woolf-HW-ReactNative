@@ -22,11 +22,11 @@ const PostsScreen = ({ navigation }) => {
   const posts = useSelector(selectAllPosts);
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
-  const userId = user.uid;
+  const userId = user.userId ? user.userId : user.uid;
 
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
 
   const handleLikeToggle = (postId) => {
     dispatch(toggleLike({ postId, userId }));

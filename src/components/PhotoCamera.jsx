@@ -8,9 +8,9 @@ import { Colors } from "../../styles/global";
 function PhotoCamera({ onCapture }) {
   const [facing, setFacing] = useState("back");
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-  const [libraryPermission, requestLibraryPermission] = MediaLibrary.usePermissions();
+  const [libraryPermission, requestLibraryPermission] =
+    MediaLibrary.usePermissions();
   const camera = useRef();
-
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -21,7 +21,6 @@ function PhotoCamera({ onCapture }) {
     };
     requestPermissions();
   }, [cameraPermission, libraryPermission]);
-
 
   if (!cameraPermission) {
     return <View />;
@@ -38,17 +37,15 @@ function PhotoCamera({ onCapture }) {
     );
   }
 
-
   function toggleCameraFacing() {
     setFacing((current) => (current === "back" ? "front" : "back"));
   }
 
-
   const takePhoto = async () => {
-    if (!camera.current) return; 
+    if (!camera.current) return;
 
     const image = await camera.current.takePictureAsync();
-    await MediaLibrary.saveToLibraryAsync(image.uri); 
+    await MediaLibrary.saveToLibraryAsync(image.uri);
     onCapture(image.uri);
   };
 
@@ -56,7 +53,11 @@ function PhotoCamera({ onCapture }) {
     <CameraView ref={camera} style={styles.camera} facing={facing}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-          <MaterialIcons name="flip-camera-android" size={24} color={Colors.whites} />
+          <MaterialIcons
+            name="flip-camera-android"
+            size={24}
+            color={Colors.whites}
+          />
           <Text style={styles.text}>Перевернути камеру</Text>
         </TouchableOpacity>
 
