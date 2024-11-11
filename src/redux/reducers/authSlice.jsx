@@ -6,8 +6,10 @@ import {
   updateAvatarDB,
 } from "../reducers/authOperation";
 
+const defaultAvatarURL = "https://imgur.com/mD71SmE";
+
 const initialState = {
-  user: { login: null, email: null, userId: "", photoURL: "" },
+  user: { login: null, email: null, userId: "", photoURL: defaultAvatarURL },
   error: null,
   isLogged: false,
 };
@@ -17,7 +19,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     clearUserInfo(state) {
-      state.user = { login: null, email: null, userId: "" };
+      state.user = { login: null, email: null, userId: "", photoURL: defaultAvatarURL};
       state.isLogged = false;
     },
 
@@ -47,7 +49,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(logoutDB.fulfilled, (state) => {
-        state.user = { login: null, email: null, userId: "" };
+        state.user = { login: null, email: null, userId: "", photoURL: defaultAvatarURL }; 
         state.isLogged = false;
         state.error = null;
       })
@@ -64,3 +66,5 @@ const authSlice = createSlice({
 export const authReducer = authSlice.reducer;
 
 export const { clearUserInfo, setUserInfo } = authSlice.actions;
+
+

@@ -144,19 +144,13 @@ const RegistrationScreen = ({ navigation }) => {
           >
             <View style={styles.contentBox}>
               <View style={styles.avatarBox}>
-
-                {/* <Image
-                  style={styles.avatarImg}
-                  source={{ uri: profilePhoto }}
-                /> */}
-
                 {profilePhoto ? (
                   <Image
                     style={styles.avatarImg}
                     source={{ uri: profilePhoto }}
                   />
                 ) : (
-                  <Image style={styles.avatarImg} source={noAvatar} /> 
+                  <Image style={styles.avatarImg} source={noAvatar} />
                 )}
 
                 <TouchableOpacity onPress={addAvatar} style={styles.avatarAdd}>
